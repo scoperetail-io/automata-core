@@ -1,4 +1,4 @@
-package com.scoperetail.automata.core.automata;
+package com.scoperetail.automata.core.fsm;
 
 import com.scoperetail.automata.core.model.Event;
 

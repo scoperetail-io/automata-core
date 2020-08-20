@@ -19,7 +19,6 @@ public class AutomataNameResolver {
 
   private Map<String, String> key;
 
-
   @Deprecated
   public String getAutomataName(String supplierType, String customerType, String orderType) {
     String key = String.format("%s|%s|%s", supplierType, customerType, orderType);

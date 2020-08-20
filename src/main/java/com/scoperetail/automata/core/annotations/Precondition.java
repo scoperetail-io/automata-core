@@ -1,18 +1,13 @@
-package com.scoperetail.automata.core.automata.annotations;
+package com.scoperetail.automata.core.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- * 
- * @author scoperetail
- *
- */
-@Target({ElementType.FIELD})
+/** @author scoperetail */
+@Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface State {
-	String name();
-	String comment();
+public @interface Precondition {
+  Transition transition();
 }

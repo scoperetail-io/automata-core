@@ -1,8 +1,8 @@
-package com.scoperetail.automata.core.automata.util;
+package com.scoperetail.automata.core.util;
 
-import com.scoperetail.automata.core.automata.FSM;
-import com.scoperetail.automata.core.automata.State;
-import com.scoperetail.automata.core.automata.Transition;
+import com.scoperetail.automata.core.fsm.FSM;
+import com.scoperetail.automata.core.fsm.State;
+import com.scoperetail.automata.core.fsm.Transition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +15,43 @@ public class GraphTheoryUtil {
   private static final Logger LOGGER = LoggerFactory.getLogger(GraphTheoryUtil.class);
 
   private GraphTheoryUtil() {}
+
+  /*
+   * checkConnectivity works on BFS algorithm
+   * S1--->S2--->S3---->S4---->S7
+   *       |            ^
+   *       |            |
+   *       v            |
+   *       S5-----------S6
+   * It starts with node which indicates START state and visits all possible
+   * nodes, if all nodes are reachable, it is considered a connected graph
+   * which indicates that automata will be able to cover all states which are defined
+   *
+   */
+  public static boolean checkConnectivity(FSM fsm) {
+    Graph g = new Graph();
+    for (State state : fsm.getStates().values()) {
+      for (Transition t : state.getTransitions().values()) {
+        g.addEdge(state.getName(), t.getToState(), t.getOnEvent());
+      }
+    }
+    boolean isConnected = g.breadthFirstSearch(fsm.getStartState());
+    if (isConnected) {
+      Map<String, Set<String>> allPaths =
+          g.findAllPathBetweenNodes(fsm.getStartState(), fsm.getEndStates());
+      Iterator<Entry<String, Set<String>>> i = allPaths.entrySet().iterator();
+      while (i.hasNext()) {
+        Entry<String, Set<String>> entry = i.next();
+        String key = entry.getKey();
+        // Order will be reversed to store future events in the order they should be applied
+        List<String> list = new ArrayList<>(entry.getValue());
+        Collections.reverse(list);
+        LOGGER.info("State: {} :: Future Events:{}", key, list);
+        fsm.getStates().get(key).getFutureEvents().addAll(list);
+      }
+    }
+    return isConnected;
+  }
 
   /**
    * @author scoperetail
@@ -42,8 +79,8 @@ public class GraphTheoryUtil {
 
   @SuppressWarnings("squid:S3824")
   private static class Graph {
-    private Map<String, LinkedList<EdgeAndNode>> adjecency = new HashMap<>();
-    private Map<String, Set<String>> futureEventsFromVertex = new HashMap<>();
+    private final Map<String, LinkedList<EdgeAndNode>> adjecency = new HashMap<>();
+    private final Map<String, Set<String>> futureEventsFromVertex = new HashMap<>();
     // Add an edge into the graph
     /*
      * For any automata we will pass every set of source,target and event
@@ -194,42 +231,5 @@ public class GraphTheoryUtil {
       // alternate paths
       visited.put(start, false);
     }
-  }
-
-  /*
-   * checkConnectivity works on BFS algorithm
-   * S1--->S2--->S3---->S4---->S7
-   *       |            ^
-   *       |            |
-   *       v            |
-   *       S5-----------S6
-   * It starts with node which indicates START state and visits all possible
-   * nodes, if all nodes are reachable, it is considered a connected graph
-   * which indicates that automata will be able to cover all states which are defined
-   *
-   */
-  public static boolean checkConnectivity(FSM fsm) {
-    Graph g = new Graph();
-    for (State state : fsm.getStates().values()) {
-      for (Transition t : state.getTransitions().values()) {
-        g.addEdge(state.getName(), t.getToState(), t.getOnEvent());
-      }
-    }
-    boolean isConnected = g.breadthFirstSearch(fsm.getStartState());
-    if (isConnected) {
-      Map<String, Set<String>> allPaths =
-          g.findAllPathBetweenNodes(fsm.getStartState(), fsm.getEndStates());
-      Iterator<Entry<String, Set<String>>> i = allPaths.entrySet().iterator();
-      while (i.hasNext()) {
-        Entry<String, Set<String>> entry = i.next();
-        String key = entry.getKey();
-        // Order will be reversed to store future events in the order they should be applied
-        List<String> list = new ArrayList<>(entry.getValue());
-        Collections.reverse(list);
-        LOGGER.info("State: {} :: Future Events:{}", key, list);
-        fsm.getStates().get(key).getFutureEvents().addAll(list);
-      }
-    }
-    return isConnected;
   }
 }

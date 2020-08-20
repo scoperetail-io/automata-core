@@ -1,6 +1,6 @@
-package com.scoperetail.automata.core.automata;
+package com.scoperetail.automata.core.fsm;
 
-import com.scoperetail.automata.core.automata.exception.StateAutomataException;
+import com.scoperetail.automata.core.exception.StateAutomataException;
 import com.scoperetail.automata.core.model.Event;
 import com.scoperetail.automata.core.model.RejectedEvent;
 import com.scoperetail.automata.core.model.StateEntity;
@@ -17,14 +17,11 @@ import java.util.List;
 @Slf4j
 public class FSMHandler {
 
+  private final FSMCollection fsmCollection;
+  private final StateEntityService orderService;
+  private final EventService eventService;
   List<Class<?>> modelClasses;
   List<Class<?>> repoClasses;
-
-  private final FSMCollection fsmCollection;
-
-  private final StateEntityService orderService;
-
-  private final EventService eventService;
 
   public FSMHandler(
       final FSMCollection fsmCollection,

@@ -1,4 +1,4 @@
-package com.scoperetail.automata.core.automata;
+package com.scoperetail.automata.core.fsm;
 
 import com.scoperetail.automata.core.model.StateEntity;
 
@@ -9,5 +9,5 @@ public interface FSMService {
 
   void saveEntity(StateEntity entity);
 
-  public void updateState(long id, String stateName);
+  void updateState(long id, String stateName);
 }

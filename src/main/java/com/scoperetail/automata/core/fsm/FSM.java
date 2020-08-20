@@ -1,4 +1,4 @@
-package com.scoperetail.automata.core.automata;
+package com.scoperetail.automata.core.fsm;
 
 import com.scoperetail.automata.core.model.Event;
 import com.scoperetail.automata.core.model.RejectedEvent;
@@ -127,7 +127,7 @@ public class FSM {
     // 3. old event which is still stuck in state
     // 4. old event which has made n transitions
     if (eventIsProcessed) {
-      applyParkedEvents((StateEntity) stateful);
+      applyParkedEvents(stateful);
     }
   }
 
@@ -307,7 +307,7 @@ public class FSM {
   public List<Event> sortByEventOrdering(List<Event> events, LinkedHashSet<String> ordering) {
     Comparator<Event> c =
         new Comparator<Event>() {
-          List<String> list = new ArrayList<>(ordering);
+          final List<String> list = new ArrayList<>(ordering);
 
           @Override
           public int compare(Event o1, Event o2) {

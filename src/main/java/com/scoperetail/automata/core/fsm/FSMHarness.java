@@ -1,13 +1,13 @@
-package com.scoperetail.automata.core.automata;
+package com.scoperetail.automata.core.fsm;
 
-import com.scoperetail.automata.core.automata.annotations.Automata;
-import com.scoperetail.automata.core.automata.annotations.Preaction;
-import com.scoperetail.automata.core.automata.annotations.Precondition;
-import com.scoperetail.automata.core.automata.exception.DisconnectedGraphException;
-import com.scoperetail.automata.core.automata.exception.StateAutomataException;
-import com.scoperetail.automata.core.automata.util.GraphTheoryUtil;
+import com.scoperetail.automata.core.annotations.Automata;
+import com.scoperetail.automata.core.annotations.Preaction;
+import com.scoperetail.automata.core.annotations.Precondition;
+import com.scoperetail.automata.core.exception.DisconnectedGraphException;
+import com.scoperetail.automata.core.exception.StateAutomataException;
 import com.scoperetail.automata.core.model.Event;
 import com.scoperetail.automata.core.service.EventService;
+import com.scoperetail.automata.core.util.GraphTheoryUtil;
 import org.springframework.context.ApplicationContext;
 
 import java.lang.annotation.Annotation;
@@ -46,13 +46,13 @@ public class FSMHarness {
       fsm.setClazz(automata.clazz());
       fsm.setServiceImpl((FSMService) applicationContext.getBean(automata.service()));
       fsm.setAutomata(applicationContext.getBean(automata.name()));
-      for (com.scoperetail.automata.core.automata.annotations.Event event : automata.events()) {
+      for (com.scoperetail.automata.core.annotations.Event event : automata.events()) {
         Event e = new Event();
         e.setEventName(event.name());
         fsm.getEvents().put(e.getEventName(), e);
       }
 
-      for (com.scoperetail.automata.core.automata.annotations.State state : automata.states()) {
+      for (com.scoperetail.automata.core.annotations.State state : automata.states()) {
         State s = new State();
         s.setName(state.name());
         s.setComment(state.comment());
@@ -65,7 +65,7 @@ public class FSMHarness {
         fsm.getStates().put(s.getName(), s);
       }
 
-      for (com.scoperetail.automata.core.automata.annotations.Transition transition :
+      for (com.scoperetail.automata.core.annotations.Transition transition :
           automata.transitions()) {
         String fromName = transition.from();
         String toName = transition.to();
@@ -130,8 +130,7 @@ public class FSMHarness {
       // Populate Future events for every State, this will help in discarding events which are no
       // longer valid for automata
       // such events could result due to redelivery or late arrivals
-      if (GraphTheoryUtil
-          .checkConnectivity(fsm)) {
+      if (GraphTheoryUtil.checkConnectivity(fsm)) {
         fsmCollection.addFSMByName(fsmName, fsm);
       } else {
         // if yes throw exception due to Disconnected Graph
@@ -144,8 +143,7 @@ public class FSMHarness {
       if (method.isAnnotationPresent(Precondition.class)) {
         Annotation annotation = method.getAnnotation(Precondition.class);
         Precondition precondition = (Precondition) annotation;
-        com.scoperetail.automata.core.automata.annotations.Transition transition =
-            precondition.transition();
+        com.scoperetail.automata.core.annotations.Transition transition = precondition.transition();
         String fromName = transition.from();
         String eventName = transition.event();
         State fromState = fsm.getStates().get(fromName);
@@ -156,8 +154,7 @@ public class FSMHarness {
       if (method.isAnnotationPresent(Preaction.class)) {
         Annotation annotation = method.getAnnotation(Preaction.class);
         Preaction preaction = (Preaction) annotation;
-        com.scoperetail.automata.core.automata.annotations.Transition transition =
-            preaction.transition();
+        com.scoperetail.automata.core.annotations.Transition transition = preaction.transition();
         String fromName = transition.from();
         String eventName = transition.event();
         State fromState = fsm.getStates().get(fromName);

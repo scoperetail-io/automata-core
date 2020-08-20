@@ -1,6 +1,6 @@
-package com.scoperetail.automata.core.automata.config;
+package com.scoperetail.automata.core.config;
 
-import com.scoperetail.automata.core.automata.annotations.*;
+import com.scoperetail.automata.core.annotations.*;
 import com.scoperetail.automata.core.model.StateEntity;
 import com.scoperetail.automata.core.service.StateEntityService;
 import lombok.extern.slf4j.Slf4j;
