@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 /** @author scoperetail */
 @Component
 @Slf4j
-public class FSMHandler {
+public class FSMHandler implements FiniteStateMachine {
 
   private final FSMCollection fsmCollection;
   private final StateEntityService orderService;
@@ -27,6 +27,7 @@ public class FSMHandler {
     this.eventService = eventService;
   }
 
+  @Override
   public void onEvent(PendingEvent onEvent) throws StateAutomataException {
     FSM fsm = null;
     if (onEvent.getAutomataName() != null) {

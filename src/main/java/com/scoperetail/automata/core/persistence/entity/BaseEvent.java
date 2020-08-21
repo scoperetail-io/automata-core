@@ -1,6 +1,6 @@
 package com.scoperetail.automata.core.persistence.entity;
 
-import com.scoperetail.automata.core.spi.AutomataEvent;
+import com.scoperetail.automata.core.client.spi.AutomataEvent;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 

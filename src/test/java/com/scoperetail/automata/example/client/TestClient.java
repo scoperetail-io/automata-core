@@ -1,11 +1,9 @@
 package com.scoperetail.automata.example.client;
 
 import com.scoperetail.automata.core.AutomataCoreApplication;
+import com.scoperetail.automata.core.client.spi.Automata;
+import com.scoperetail.automata.core.client.spi.AutomataEvent;
 import com.scoperetail.automata.core.exception.StateAutomataException;
-import com.scoperetail.automata.core.fsm.FSMHandler;
-import com.scoperetail.automata.core.helper.EventHelper;
-import com.scoperetail.automata.core.persistence.entity.PendingEvent;
-import com.scoperetail.automata.core.spi.AutomataEvent;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +15,7 @@ import java.io.IOException;
 
 import static com.scoperetail.automata.example.utils.AutomataEventFactory.from;
 import static com.scoperetail.automata.example.utils.FileReader.getMessage;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ActiveProfiles("example")
@@ -25,17 +24,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class TestClient {
 
   private static final String BASE_PATH = "src/test/resources/";
-  @Autowired private FSMHandler fsmHandler;
-  @Autowired private EventHelper eventHelper;
+  @Autowired private Automata automata;
 
   @Test
   public void quikPikEvent() throws IOException, StateAutomataException {
     String json = getMessage(BASE_PATH + "json/quikpik/quikpik_1.json");
     AutomataEvent automataEvent = from(json);
-
-    PendingEvent e = eventHelper.getAutomataEventForMessage(automataEvent);
-    assertNotNull(e);
-    fsmHandler.onEvent(e);
+    assertNotNull(automataEvent);
+    assertAll(() -> automata.processEvent(automataEvent));
   }
 
   @Test
@@ -45,12 +41,11 @@ public class TestClient {
     String json2 = getMessage(BASE_PATH + "json/quikpik/quikpik_2.json");
     AutomataEvent automataEvent2 = from(json2);
 
-    PendingEvent e1 = eventHelper.getAutomataEventForMessage(automataEvent1);
-    PendingEvent e2 = eventHelper.getAutomataEventForMessage(automataEvent2);
-    assertNotNull(e1);
-    assertNotNull(e2);
-    fsmHandler.onEvent(e1);
-    fsmHandler.onEvent(e2);
-    fsmHandler.onEvent(e2);
+    assertNotNull(automataEvent1);
+    assertAll(() -> automata.processEvent(automataEvent1));
+    assertNotNull(automataEvent2);
+    assertAll(() -> automata.processEvent(automataEvent2));
+    assertNotNull(automataEvent2);
+    assertAll(() -> automata.processEvent(automataEvent2));
   }
 }

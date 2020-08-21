@@ -1,4 +1,4 @@
-package com.scoperetail.automata.core.spi;
+package com.scoperetail.automata.core.client.spi;
 
 import java.util.List;
 

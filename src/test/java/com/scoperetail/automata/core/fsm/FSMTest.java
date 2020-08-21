@@ -35,7 +35,8 @@ public class FSMTest {
 
   @Mock StateEntityService orderService;
 
-  @Mock FSMHandler fsmHandler;
+  @Mock
+  FiniteStateMachine finiteStateMachine;
 
   @Mock TestRushOrder testRushOrder;
 
