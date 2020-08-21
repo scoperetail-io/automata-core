@@ -1,6 +1,6 @@
 package com.scoperetail.automata.core.persistence.repository;
 
-import com.scoperetail.automata.core.persistence.entity.Event;
+import com.scoperetail.automata.core.persistence.entity.PendingEvent;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,11 +12,10 @@ import java.util.List;
 
 /** @author scoperetail */
 @Repository
-public interface EventRepository extends JpaRepository<Event, Long> {
+public interface EventRepository extends JpaRepository<PendingEvent, Long> {
 
-  Event findByKey(final String key);
-
-  List<Event> findByKeySortByCreateTS(@Param("key") final String key);
+  @Query(name = "FIND_BY_KEY_AND_SORT_BY_CREAT_TS")
+  List<PendingEvent> findByKeySortByCreateTS(@Param("key") final String key);
 
   @Query(name = "DELETE_PENDING_EVENTS")
   @Modifying

@@ -6,7 +6,7 @@ import com.scoperetail.automata.core.annotations.Precondition;
 import com.scoperetail.automata.core.exception.DisconnectedGraphException;
 import com.scoperetail.automata.core.exception.StateAutomataException;
 import com.scoperetail.automata.core.helper.GraphTheoryHelper;
-import com.scoperetail.automata.core.persistence.entity.Event;
+import com.scoperetail.automata.core.persistence.entity.PendingEvent;
 import com.scoperetail.automata.core.service.EventService;
 import org.springframework.context.ApplicationContext;
 
@@ -47,7 +47,7 @@ public class FSMHarness {
       fsm.setServiceImpl((FSMService) applicationContext.getBean(automata.service()));
       fsm.setAutomata(applicationContext.getBean(automata.name()));
       for (com.scoperetail.automata.core.annotations.Event event : automata.events()) {
-        Event e = new Event();
+        PendingEvent e = new PendingEvent();
         e.setEventName(event.name());
         fsm.getEvents().put(e.getEventName(), e);
       }
@@ -80,14 +80,14 @@ public class FSMHarness {
                   + "is not defined in @State");
         }
 
-        Event onEvent = fsm.getEvents().get(eventName);
+        PendingEvent onEvent = fsm.getEvents().get(eventName);
         // Check for events with no matching nodes, if yes StateAutomataException
         if (onEvent == null) {
           throw new StateAutomataException(
               automataClass.getName()
-                  + " :Event used in @Transition :"
+                  + " :PendingEvent used in @Transition :"
                   + eventName
-                  + "is not defined in @Event");
+                  + "is not defined in @PendingEvent");
         }
         State toState = fsm.getStates().get(toName);
         // Check for transitions with no matching nodes, if yes StateAutomataException
@@ -147,7 +147,7 @@ public class FSMHarness {
         String fromName = transition.from();
         String eventName = transition.event();
         State fromState = fsm.getStates().get(fromName);
-        Event onEvent = fsm.getEvents().get(eventName);
+        PendingEvent onEvent = fsm.getEvents().get(eventName);
         fromState.addPreCondition(onEvent.getEventName(), method);
       }
 
@@ -158,7 +158,7 @@ public class FSMHarness {
         String fromName = transition.from();
         String eventName = transition.event();
         State fromState = fsm.getStates().get(fromName);
-        Event onEvent = fsm.getEvents().get(eventName);
+        PendingEvent onEvent = fsm.getEvents().get(eventName);
         fromState.addPreAction(onEvent.getEventName(), method);
       }
     }

@@ -4,7 +4,7 @@ import com.scoperetail.automata.core.AutomataCoreApplication;
 import com.scoperetail.automata.core.exception.DisconnectedGraphException;
 import com.scoperetail.automata.core.exception.StateAutomataException;
 import com.scoperetail.automata.core.fixtures.automata.*;
-import com.scoperetail.automata.core.persistence.entity.Event;
+import com.scoperetail.automata.core.persistence.entity.PendingEvent;
 import com.scoperetail.automata.core.persistence.entity.StateEntity;
 import com.scoperetail.automata.core.service.EventService;
 import com.scoperetail.automata.core.service.StateEntityService;
@@ -79,8 +79,8 @@ public class FSMTest {
     assertTrue(fsm.getStates().keySet().size() == 6);
   }
 
-  private Event getEvent() {
-    Event event = new Event();
+  private PendingEvent getEvent() {
+    PendingEvent event = new PendingEvent();
     event.setEventName("E1");
     event.setAutomataName("TestRushOrder");
     event.setKey("10000");

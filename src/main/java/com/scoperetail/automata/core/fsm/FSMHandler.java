@@ -1,7 +1,7 @@
 package com.scoperetail.automata.core.fsm;
 
 import com.scoperetail.automata.core.exception.StateAutomataException;
-import com.scoperetail.automata.core.persistence.entity.Event;
+import com.scoperetail.automata.core.persistence.entity.PendingEvent;
 import com.scoperetail.automata.core.persistence.entity.RejectedEvent;
 import com.scoperetail.automata.core.persistence.entity.StateEntity;
 import com.scoperetail.automata.core.service.EventService;
@@ -27,7 +27,7 @@ public class FSMHandler {
     this.eventService = eventService;
   }
 
-  public void onEvent(Event onEvent) throws StateAutomataException {
+  public void onEvent(PendingEvent onEvent) throws StateAutomataException {
     FSM fsm = null;
     if (onEvent.getAutomataName() != null) {
       if (fsmCollection.getFsmMapByName().containsKey(onEvent.getAutomataName())) {
@@ -36,7 +36,7 @@ public class FSMHandler {
         // Type will be taken from Entity
       } else {
         throw new StateAutomataException(
-            "Unsupported Event/Order Type: " + onEvent.getAutomataName());
+            "Unsupported PendingEvent/Order Type: " + onEvent.getAutomataName());
       }
     }
 

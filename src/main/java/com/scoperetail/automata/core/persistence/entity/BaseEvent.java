@@ -8,19 +8,13 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /** @author scoperetail */
-@Entity(name = "PendingEvent")
-@Table(name = "pending_event")
-@NamedQuery(
-    name = "Event.findByKeySortByCreateTS",
-    query = "select e from PendingEvent e where e.key like :key order by e.createTS ASC")
-// Event,RejectedEvent and SuccessEvent have similar attributes
 @Getter
 @Setter
-@Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class Event {
+@MappedSuperclass
+public class BaseEvent {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @EqualsAndHashCode.Include
@@ -51,13 +45,19 @@ public class Event {
   @Column(name = "retry_count")
   private long retryCount;
 
-  public static Event of(final AutomataEvent order, final String automataName) {
-    return Event.builder()
-        .payload(order.getPayload())
-        .eventName(order.getEventName())
-        .key(order.getId())
-        .lookupKey(order.primaryLookupKey())
-        .automataName(automataName)
-        .build();
+  public BaseEvent(final AutomataEvent automataEvent, final String automataName) {
+    this.key = automataEvent.getId();
+    this.lookupKey = automataEvent.primaryLookupKey();
+    this.automataName = automataName;
+    this.payload = automataEvent.getPayload();
+    this.eventName = automataEvent.getEventName();
+  }
+
+  public BaseEvent(final PendingEvent event) {
+    this.key = event.getKey();
+    this.lookupKey = event.getLookupKey();
+    this.automataName = event.getAutomataName();
+    this.payload = event.getPayload();
+    this.eventName = event.getEventName();
   }
 }

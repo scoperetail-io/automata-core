@@ -1,6 +1,6 @@
 package com.scoperetail.automata.core.fsm;
 
-import com.scoperetail.automata.core.persistence.entity.Event;
+import com.scoperetail.automata.core.persistence.entity.PendingEvent;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -107,32 +107,32 @@ public class State {
     this.futureEvents = futureEvents;
   }
 
-  public String getToState(Event onEvent) {
+  public String getToState(PendingEvent onEvent) {
     if (this.transitions.containsKey(onEvent.getEventName())) {
       return this.transitions.get(onEvent.getEventName()).getToState();
     }
     return null;
   }
 
-  public Method getPreCondition(Event onEvent) {
+  public Method getPreCondition(PendingEvent onEvent) {
     if (this.preConditions.containsKey(onEvent.getEventName())) {
       return this.preConditions.get(onEvent.getEventName());
     }
     return null;
   }
 
-  public Method getPreAction(Event onEvent) {
+  public Method getPreAction(PendingEvent onEvent) {
     if (this.preActions.containsKey(onEvent.getEventName())) {
       return this.preActions.get(onEvent.getEventName());
     }
     return null;
   }
 
-  public boolean isValidEvent(Event onEvent) {
+  public boolean isValidEvent(PendingEvent onEvent) {
     return this.getValidEvents().contains(onEvent.getEventName());
   }
 
-  public boolean isFutureEvent(Event onEvent) {
+  public boolean isFutureEvent(PendingEvent onEvent) {
     return this.getFutureEvents().contains(onEvent.getEventName());
   }
 }

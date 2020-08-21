@@ -9,8 +9,7 @@ import java.sql.Timestamp;
 
 /** @author scoperetail */
 @Entity(name = "StateEntity")
-@Table(name = "order_entity")
-// Event,RejectedEvent and SuccessEvent have similar attributes
+@Table(name = "state_entity")
 @Getter
 @Setter
 @Builder

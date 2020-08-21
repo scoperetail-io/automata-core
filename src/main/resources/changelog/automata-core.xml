@@ -4,85 +4,77 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
 
     <changeSet author="tushar" id="1535500379742-4">
-        <createTable tableName="order_entity">
+        <createTable tableName="state_entity">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="automata_type" type="VARCHAR(30)"/>
-            <column name="create_ts" type="datetime(6)"/>
-            <column name="delete_ts" type="datetime(6)"/>
-            <column name="order_metadata" type="VARCHAR(255)"/>
-            <column name="order_id" type="BIGINT"/>
-            <column name="order_info" type="VARCHAR(100)"/>
             <column name="state_name" type="VARCHAR(30)"/>
-            <column name="update_ts" type="datetime(6)"/>
+            <column name="create_ts" type="datetime"/>
+            <column name="delete_ts" type="datetime"/>
+            <column name="update_ts" type="datetime"/>
+            <column name="key" type="VARCHAR(20)"/>
+            <column name="automata_type" type="VARCHAR(30)"/>
+            <column name="lookup_key" type="VARCHAR(255)"/>
         </createTable>
+        <addUniqueConstraint columnNames="key" constraintName="state_entity_uk" tableName="state_entity"/>
+        <addNotNullConstraint tableName="state_entity" columnName="create_ts" columnDataType="timestamp"
+                              defaultNullValue="CURRENT_TIMESTAMP"/>
+        <createIndex indexName="order_entity_idx" tableName="state_entity">
+            <column name="create_ts"/>
+        </createIndex>
     </changeSet>
     <changeSet author="tushar" id="1535500379742-5">
         <createTable tableName="pending_event">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="automata_name" type="VARCHAR(30)"/>
-            <column name="create_ts" type="datetime(6)"/>
-            <column name="delete_ts" type="datetime(6)"/>
+            <column name="create_ts" type="datetime"/>
+            <column name="delete_ts" type="datetime"/>
             <column name="event_name" type="VARCHAR(30)"/>
-            <column name="order_id" type="VARCHAR(20)"/>
-            <column name="order_info" type="VARCHAR(100)"/>
+            <column name="key" type="VARCHAR(20)"/>
             <column name="payload" type="VARCHAR(255)"/>
+            <column name="automata_name" type="VARCHAR(30)"/>
+            <column name="lookup_key" type="VARCHAR(255)"/>
             <column name="retry_count" type="BIGINT"/>
         </createTable>
+        <createIndex indexName="pending_event_idx" tableName="pending_event">
+            <column name="key"/>
+        </createIndex>
     </changeSet>
     <changeSet author="tushar" id="1535500379742-6">
         <createTable tableName="rejected_event">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="automata_name" type="VARCHAR(30)"/>
-            <column name="create_ts" type="datetime(6)"/>
-            <column name="delete_ts" type="datetime(6)"/>
+            <column name="create_ts" type="datetime"/>
+            <column name="delete_ts" type="datetime"/>
             <column name="event_name" type="VARCHAR(30)"/>
-            <column name="order_id" type="VARCHAR(20)"/>
-            <column name="order_info" type="VARCHAR(100)"/>
+            <column name="key" type="VARCHAR(20)"/>
             <column name="payload" type="VARCHAR(255)"/>
+            <column name="automata_name" type="VARCHAR(30)"/>
+            <column name="lookup_key" type="VARCHAR(255)"/>
             <column name="retry_count" type="BIGINT"/>
         </createTable>
+        <createIndex indexName="rejected_event_idx" tableName="rejected_event">
+            <column name="key"/>
+        </createIndex>
     </changeSet>
     <changeSet author="tushar" id="1535500379742-7">
         <createTable tableName="success_event">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="automata_name" type="VARCHAR(30)"/>
-            <column name="create_ts" type="datetime(6)"/>
-            <column name="delete_ts" type="datetime(6)"/>
+            <column name="create_ts" type="datetime"/>
+            <column name="delete_ts" type="datetime"/>
             <column name="event_name" type="VARCHAR(30)"/>
-            <column name="order_id" type="VARCHAR(20)"/>
-            <column name="order_info" type="VARCHAR(100)"/>
+            <column name="key" type="VARCHAR(20)"/>
             <column name="payload" type="VARCHAR(255)"/>
+            <column name="automata_name" type="VARCHAR(30)"/>
+            <column name="lookup_key" type="VARCHAR(255)"/>
             <column name="retry_count" type="BIGINT"/>
         </createTable>
-    </changeSet>
-    <changeSet author="tushar" id="1535500379742-10">
-        <addUniqueConstraint columnNames="order_id" constraintName="order_entity_uk" tableName="order_entity"/>
-    </changeSet>
-    <changeSet author="pabhishek" id="SCOOP-7261">
-        <createIndex indexName="pending_event_idx" tableName="pending_event">
-            <column name="order_id"/>
-        </createIndex>
-        <createIndex indexName="rejected_event_idx" tableName="rejected_event">
-            <column name="order_id"/>
-        </createIndex>
         <createIndex indexName="success_event_idx" tableName="success_event">
-            <column name="order_id"/>
-        </createIndex>
-    </changeSet>
-
-    <changeSet id="indexingForEraser" author="ajadhav">
-        <addNotNullConstraint tableName="order_entity" columnName="create_ts" columnDataType="timestamp"
-                              defaultNullValue="CURRENT_TIMESTAMP"/>
-        <createIndex indexName="order_entity_create_ts_idx" tableName="order_entity">
-            <column name="create_ts"/>
+            <column name="key"/>
         </createIndex>
     </changeSet>
 </databaseChangeLog>

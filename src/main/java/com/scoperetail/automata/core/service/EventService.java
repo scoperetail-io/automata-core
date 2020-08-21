@@ -1,6 +1,6 @@
 package com.scoperetail.automata.core.service;
 
-import com.scoperetail.automata.core.persistence.entity.Event;
+import com.scoperetail.automata.core.persistence.entity.PendingEvent;
 import com.scoperetail.automata.core.persistence.entity.RejectedEvent;
 import com.scoperetail.automata.core.persistence.entity.SuccessEvent;
 
@@ -9,17 +9,17 @@ import java.util.List;
 /** @author scoperetail */
 public interface EventService {
 
-  Event find(Long id);
+  PendingEvent find(Long id);
 
-  void save(Event event);
+  void save(PendingEvent event);
 
-  void incrementRetry(Event event);
+  void incrementRetry(PendingEvent event);
 
   void save(RejectedEvent rejectedEvent);
 
   void save(SuccessEvent successEvent);
 
-  List<Event> findAll();
+  List<PendingEvent> findAll();
 
-  List<Event> findByKeySortByCreateTS(final String key);
+  List<PendingEvent> findByKeySortByCreateTS(final String key);
 }

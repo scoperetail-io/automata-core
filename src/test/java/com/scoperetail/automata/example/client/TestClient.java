@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.scoperetail.automata.core.AutomataCoreApplication;
 import com.scoperetail.automata.core.exception.StateAutomataException;
 import com.scoperetail.automata.core.fsm.FSMHandler;
-import com.scoperetail.automata.core.persistence.entity.Event;
+import com.scoperetail.automata.core.persistence.entity.PendingEvent;
 import com.scoperetail.automata.core.spi.AutomataEvent;
 import com.scoperetail.automata.core.helper.EventHelper;
 import com.scoperetail.automata.example.event.QuikPikAutomataEvent;
@@ -40,7 +40,7 @@ public class TestClient {
             Optional.ofNullable(json), Optional.of(new TypeReference<QuikPikAutomataEvent>() {}));
     assertNotNull(automataEvent);
 
-    Event e = eventHelper.getAutomataEventForMessage(automataEvent);
+    PendingEvent e = eventHelper.getAutomataEventForMessage(automataEvent);
     assertNotNull(e);
     fsmHandler.onEvent(e);
   }

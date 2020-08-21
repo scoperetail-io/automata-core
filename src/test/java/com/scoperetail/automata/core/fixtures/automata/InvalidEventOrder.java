@@ -29,8 +29,8 @@ import org.springframework.stereotype.Component;
       @Event(name = "E1", comment = "START --E1---> SECOND"),
       @Event(name = "E2", comment = "SECOND --E2---> THIRD"),
       // This should create a problem
-      /*@Event(name="E3", comment="THIRD --E3---> FOURTH"),
-      @Event(name="E4", comment="FOURTH --E4---> FIFTH"),*/
+      /*@PendingEvent(name="E3", comment="THIRD --E3---> FOURTH"),
+      @PendingEvent(name="E4", comment="FOURTH --E4---> FIFTH"),*/
       @Event(name = "E5", comment = "FIFTH --E5---> END")
     },
     name = "InvalidEventOrder",

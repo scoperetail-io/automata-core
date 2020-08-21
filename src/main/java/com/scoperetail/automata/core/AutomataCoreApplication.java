@@ -8,8 +8,7 @@ import org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfigurati
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication(
-    exclude = {LiquibaseAutoConfiguration.class, RepositoryRestMvcAutoConfiguration.class})
+@SpringBootApplication
 @ComponentScan(basePackages = {"com.scoperetail"})
 @EntityScan(basePackages = {"com.scoperetail"})
 @EnableJpaRepositories(basePackages = {"com.scoperetail"})

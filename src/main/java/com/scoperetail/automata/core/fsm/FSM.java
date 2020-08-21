@@ -1,6 +1,6 @@
 package com.scoperetail.automata.core.fsm;
 
-import com.scoperetail.automata.core.persistence.entity.Event;
+import com.scoperetail.automata.core.persistence.entity.PendingEvent;
 import com.scoperetail.automata.core.persistence.entity.RejectedEvent;
 import com.scoperetail.automata.core.persistence.entity.StateEntity;
 import com.scoperetail.automata.core.persistence.entity.SuccessEvent;
@@ -21,7 +21,7 @@ public class FSM {
   private FSMService serviceImpl;
   private EventService eventService;
   private Map<String, State> states = new HashMap<>();
-  private Map<String, Event> events = new HashMap<>();
+  private Map<String, PendingEvent> events = new HashMap<>();
   private List<String> endStates;
   private String startState;
 
@@ -57,11 +57,11 @@ public class FSM {
     this.states = states;
   }
 
-  public Map<String, Event> getEvents() {
+  public Map<String, PendingEvent> getEvents() {
     return events;
   }
 
-  public void setEvents(Map<String, Event> events) {
+  public void setEvents(Map<String, PendingEvent> events) {
     this.events = events;
   }
 
@@ -107,7 +107,7 @@ public class FSM {
    * @param stateful
    * @param onEvent
    */
-  public void onEvent(StateEntity stateful, Event onEvent) {
+  public void onEvent(StateEntity stateful, PendingEvent onEvent) {
     if (onEvent.getAutomataName() != null
         && onEvent.getAutomataName() != ""
         && stateful.getAutomataType() != null
@@ -133,7 +133,7 @@ public class FSM {
   // For maintaining cohesiveness of event processing
   // Allowing commented code to make reverting back easier
   @SuppressWarnings({"squid:S3776", "squid:CommentedOutCodeLine"})
-  private boolean processEvent(StateEntity stateful, Event onEvent) {
+  private boolean processEvent(StateEntity stateful, PendingEvent onEvent) {
     boolean retVal = false;
     log.trace("FSM:{} will processEvent event: {} on state: {}", this.getName(), onEvent, stateful);
     Long id = stateful.getId();
@@ -240,14 +240,14 @@ public class FSM {
     return retVal;
   }
 
-  private void saveToRejected(Event onEvent) {
+  private void saveToRejected(PendingEvent onEvent) {
     onEvent.setDeleteTS(new Timestamp(System.currentTimeMillis()));
     RejectedEvent rejectedEvent = RejectedEvent.of(onEvent);
     this.eventService.save(rejectedEvent);
   }
 
   private boolean checkPreCondition(
-      Method preConditionMethod, StateEntity stateful, Event onEvent) {
+      Method preConditionMethod, StateEntity stateful, PendingEvent onEvent) {
     if (preConditionMethod != null) {
       try {
         return (Boolean) preConditionMethod.invoke(this.automata, stateful, onEvent);
@@ -260,7 +260,7 @@ public class FSM {
     }
   }
 
-  private boolean checkPreAction(Method preActionMethod, StateEntity stateful, Event onEvent) {
+  private boolean checkPreAction(Method preActionMethod, StateEntity stateful, PendingEvent onEvent) {
     if (preActionMethod != null) {
       try {
         return (Boolean) preActionMethod.invoke(this.automata, stateful, onEvent);
@@ -279,7 +279,7 @@ public class FSM {
 
   private void applyParkedEvents(StateEntity stateEntity) {
 
-    List<Event> pendingEvents = findEligibleParkedEvents(stateEntity.getKey());
+    List<PendingEvent> pendingEvents = findEligibleParkedEvents(stateEntity.getKey());
     if (pendingEvents.size() > 1) {
       // We know that Future Events are stored in a LinkedHashSet, its safe to typecast
       pendingEvents =
@@ -288,12 +288,12 @@ public class FSM {
               (LinkedHashSet<String>)
                   (this.getState(stateEntity.getStateName())).getFutureEvents());
     }
-    for (Event e : pendingEvents) {
+    for (PendingEvent e : pendingEvents) {
       processEvent(stateEntity, e);
     }
   }
 
-  private List<Event> findEligibleParkedEvents(final String key) {
+  private List<PendingEvent> findEligibleParkedEvents(final String key) {
     return this.eventService.findByKeySortByCreateTS(key);
   }
 
@@ -302,13 +302,13 @@ public class FSM {
    * @param ordering
    * @return list of events sorted by the order they should be applied
    */
-  public List<Event> sortByEventOrdering(List<Event> events, LinkedHashSet<String> ordering) {
-    Comparator<Event> c =
-        new Comparator<Event>() {
+  public List<PendingEvent> sortByEventOrdering(List<PendingEvent> events, LinkedHashSet<String> ordering) {
+    Comparator<PendingEvent> c =
+        new Comparator<PendingEvent>() {
           final List<String> list = new ArrayList<>(ordering);
 
           @Override
-          public int compare(Event o1, Event o2) {
+          public int compare(PendingEvent o1, PendingEvent o2) {
             if (Objects.equals(o1, o2)) {
               return 0;
             } else if (list.indexOf(o1.getEventName()) > list.indexOf(o2.getEventName())) {

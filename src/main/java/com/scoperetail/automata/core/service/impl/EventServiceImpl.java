@@ -1,6 +1,6 @@
 package com.scoperetail.automata.core.service.impl;
 
-import com.scoperetail.automata.core.persistence.entity.Event;
+import com.scoperetail.automata.core.persistence.entity.PendingEvent;
 import com.scoperetail.automata.core.persistence.entity.RejectedEvent;
 import com.scoperetail.automata.core.persistence.entity.SuccessEvent;
 import com.scoperetail.automata.core.persistence.repository.EventRepository;
@@ -30,8 +30,8 @@ public class EventServiceImpl implements EventService {
   @PersistenceContext EntityManager entityManager;
 
   @Override
-  public Event find(Long id) {
-    Optional<Event> event = eventRepository.findById(id);
+  public PendingEvent find(Long id) {
+    Optional<PendingEvent> event = eventRepository.findById(id);
     if (event.isPresent()) {
       return event.get();
     } else {
@@ -40,14 +40,14 @@ public class EventServiceImpl implements EventService {
   }
 
   @Override
-  public void save(Event event) {
+  public void save(PendingEvent event) {
     eventRepository.save(event);
     eventRepository.flush();
   }
 
   @Override
-  public void incrementRetry(Event event) {
-    Event eventManaged = find(event.getId());
+  public void incrementRetry(PendingEvent event) {
+    PendingEvent eventManaged = find(event.getId());
     if (eventManaged != null) {
       eventManaged.setRetryCount(eventManaged.getRetryCount() + 1);
       eventRepository.flush();
@@ -55,12 +55,12 @@ public class EventServiceImpl implements EventService {
   }
 
   @Override
-  public List<Event> findAll() {
+  public List<PendingEvent> findAll() {
     return eventRepository.findAll();
   }
 
   @Override
-  public List<Event> findByKeySortByCreateTS(final String key) {
+  public List<PendingEvent> findByKeySortByCreateTS(final String key) {
     return eventRepository.findByKeySortByCreateTS(key);
   }
 
