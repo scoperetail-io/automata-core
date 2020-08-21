@@ -1,7 +1,7 @@
 package com.scoperetail.automata.example.event;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.scoperetail.automata.core.spi.AutomataEvent;
+import com.scoperetail.automata.core.client.spi.AutomataEvent;
 import lombok.*;
 
 import java.util.Arrays;

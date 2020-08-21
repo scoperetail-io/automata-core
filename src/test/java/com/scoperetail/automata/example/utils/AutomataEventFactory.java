@@ -1,7 +1,7 @@
 package com.scoperetail.automata.example.utils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.scoperetail.automata.core.spi.AutomataEvent;
+import com.scoperetail.automata.core.client.spi.AutomataEvent;
 import com.scoperetail.automata.example.event.QuikPikAutomataEvent;
 import com.scoperetail.commons.json.util.JsonUtils;
 

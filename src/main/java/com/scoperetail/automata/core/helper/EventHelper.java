@@ -2,7 +2,7 @@ package com.scoperetail.automata.core.helper;
 
 import com.scoperetail.automata.core.config.AutomataNameResolver;
 import com.scoperetail.automata.core.persistence.entity.PendingEvent;
-import com.scoperetail.automata.core.spi.AutomataEvent;
+import com.scoperetail.automata.core.client.spi.AutomataEvent;
 import org.springframework.stereotype.Service;
 
 @Service
