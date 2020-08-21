@@ -9,13 +9,13 @@
     </parent>
     <groupId>com.scoperetail.automata.core</groupId>
     <artifactId>automata-core</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2</version>
     <name>automata-core</name>
     <scm>
         <developerConnection>
             scm:git:git@github.com:scoperetail-io/automata-core.git
         </developerConnection>
-        <tag>HEAD</tag>
+        <tag>automata-core-0.0.2</tag>
     </scm>
 
 
