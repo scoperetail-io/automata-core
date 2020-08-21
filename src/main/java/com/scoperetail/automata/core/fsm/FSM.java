@@ -5,8 +5,7 @@ import com.scoperetail.automata.core.model.RejectedEvent;
 import com.scoperetail.automata.core.model.StateEntity;
 import com.scoperetail.automata.core.model.SuccessEvent;
 import com.scoperetail.automata.core.service.EventService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -14,8 +13,8 @@ import java.sql.Timestamp;
 import java.util.*;
 
 /** @author scoperetail */
+@Slf4j
 public class FSM {
-  private static final Logger LOGGER = LoggerFactory.getLogger(FSM.class);
   private String name;
   private Object automata;
   private Class<?> clazz;
@@ -136,8 +135,7 @@ public class FSM {
   @SuppressWarnings({"squid:S3776", "squid:CommentedOutCodeLine"})
   private boolean processEvent(StateEntity stateful, Event onEvent) {
     boolean retVal = false;
-    LOGGER.trace(
-        "FSM:{} will processEvent event: {} on state: {}", this.getName(), onEvent, stateful);
+    log.trace("FSM:{} will processEvent event: {} on state: {}", this.getName(), onEvent, stateful);
     Long id = stateful.getId();
     if (id == null || this.getServiceImpl().findEntity(id) == null) {
       // this is new entity
@@ -150,21 +148,21 @@ public class FSM {
     State currentState = getState(stateful.getStateName());
 
     if (currentState == null) {
-      LOGGER.trace("FSM:{} state, event will be discarded: {}", this.getName(), onEvent);
+      log.trace("FSM:{} state, event will be discarded: {}", this.getName(), onEvent);
       // Discard the event and save it in rejected bucket
       // this is a rogue event, state of order has no transition defined for this event
       saveToRejected(onEvent);
       retVal = true;
     } else if (currentState.isValidEvent(onEvent)) {
-      LOGGER.trace("FSM:{} found valid event", this.getName());
+      log.trace("FSM:{} found valid event", this.getName());
       // check if conditions are met
       if (checkPreCondition(currentState.getPreCondition(onEvent), stateful, onEvent)) {
-        LOGGER.trace("FSM:{} precondition success", this.getName());
+        log.trace("FSM:{} precondition success", this.getName());
         if (checkPreAction(currentState.getPreAction(onEvent), stateful, onEvent)) {
-          LOGGER.trace("FSM:{} preaction success", this.getName());
+          log.trace("FSM:{} preaction success", this.getName());
           String toState = currentState.getToState(onEvent);
           if (toState == null) {
-            LOGGER.error("FSM:{} next state for: {} not found", this.getName(), stateful);
+            log.error("FSM:{} next state for: {} not found", this.getName(), stateful);
             return false;
           }
           // If the entity reaches the end state, mark it for soft delete
@@ -177,13 +175,13 @@ public class FSM {
           }
           stateful.setStateName(toState);
 
-          LOGGER.trace("FSM:{} state for: {} updated to: {}", this.getName(), stateful, toState);
+          log.trace("FSM:{} state for: {} updated to: {}", this.getName(), stateful, toState);
           stateful.setUpdateTS(new Timestamp(System.currentTimeMillis()));
           this.getServiceImpl().updateState(stateful.getId(), toState);
           // If this was a pending message, move it to success
           if (onEvent.getId() > 0) {
             // if this is old persisted event which should be moved to success bucket
-            LOGGER.trace(
+            log.trace(
                 "FSM:{} state event will be moved to success list after processed event: {}",
                 this.getName(),
                 onEvent);
@@ -196,7 +194,7 @@ public class FSM {
             this.eventService.save(onEvent);
             retVal = true;
           } else {
-            LOGGER.trace(
+            log.trace(
                 "FSM:{} event will be saved to success list after processed event: {}",
                 this.getName(),
                 onEvent);
@@ -211,15 +209,15 @@ public class FSM {
       if (currentState.isFutureEvent(onEvent)) {
         // Persist the event for a retry after next state transition
         if (onEvent.getId() <= 0) {
-          LOGGER.trace("FSM:{} state, a future event will be parked: {}", this.getName(), onEvent);
+          log.trace("FSM:{} state, a future event will be parked: {}", this.getName(), onEvent);
           onEvent.setCreateTS(new Timestamp(System.currentTimeMillis()));
           onEvent.setRetryCount(onEvent.getRetryCount() + 1);
           this.eventService.save(onEvent);
-          LOGGER.trace(
+          log.trace(
               "FSM:{} state, a future event successfully parked: {}", this.getName(), onEvent);
         } else {
           this.eventService.incrementRetry(onEvent);
-          LOGGER.trace("FSM:{} state, parked event still pending: {}", this.getName(), onEvent);
+          log.trace("FSM:{} state, parked event still pending: {}", this.getName(), onEvent);
         }
       } else {
         if ((onEvent.getId() > 0)) {
@@ -233,7 +231,7 @@ public class FSM {
           this.eventService.save(onEvent);
           // this.eventService.deleteById(onEvent.getId());
         } else {
-          LOGGER.trace("FSM:{} state, event will be discarded: {}", this.getName(), onEvent);
+          log.trace("FSM:{} state, event will be discarded: {}", this.getName(), onEvent);
           // Discard the event and save it in rejected bucket
           saveToRejected(onEvent);
         }
@@ -254,7 +252,7 @@ public class FSM {
       try {
         return (Boolean) preConditionMethod.invoke(this.automata, stateful, onEvent);
       } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-        LOGGER.error("Error in checkPreCondition", e);
+        log.error("Error in checkPreCondition", e);
         return false;
       }
     } else {
@@ -267,7 +265,7 @@ public class FSM {
       try {
         return (Boolean) preActionMethod.invoke(this.automata, stateful, onEvent);
       } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-        LOGGER.error("Error in checkPreAction", e);
+        log.error("Error in checkPreAction", e);
         return false;
       }
     } else {

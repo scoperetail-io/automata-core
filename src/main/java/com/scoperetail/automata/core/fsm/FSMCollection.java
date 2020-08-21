@@ -38,11 +38,6 @@ public class FSMCollection {
 
   @PostConstruct
   public void init() throws DisconnectedGraphException, StateAutomataException {
-    // TODO: Find all automata classes using reflection
-    //    FSMHarness.harnessFSM(this, applicationContext, eventService, ABSOrder.class);
-    //    FSMHarness.harnessFSM(this, applicationContext, eventService, RushOrder.class);
-    //    FSMHarness.harnessFSM(this, applicationContext, eventService, CatAOrder.class);
-    //    FSMHarness.harnessFSM(this, applicationContext, eventService, CatBOrder.class);
     FSMHarness.harnessFSM(this, applicationContext, eventService, QuikPikA.class);
   }
 }

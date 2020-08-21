@@ -9,9 +9,6 @@ import com.scoperetail.automata.core.service.StateEntityService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.sql.Timestamp;
-import java.util.List;
-
 /** @author scoperetail */
 @Component
 @Slf4j
@@ -20,8 +17,6 @@ public class FSMHandler {
   private final FSMCollection fsmCollection;
   private final StateEntityService orderService;
   private final EventService eventService;
-  List<Class<?>> modelClasses;
-  List<Class<?>> repoClasses;
 
   public FSMHandler(
       final FSMCollection fsmCollection,
@@ -50,7 +45,6 @@ public class FSMHandler {
       fsm = fsmCollection.getFSMByName(s.getAutomataType());
     }
     if (fsm == null) {
-      Timestamp ts = new Timestamp(System.currentTimeMillis());
       RejectedEvent rejectedEvent = RejectedEvent.of(onEvent);
       eventService.save(rejectedEvent);
       log.error(
