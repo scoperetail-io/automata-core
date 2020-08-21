@@ -6,6 +6,7 @@ import com.scoperetail.automata.core.persistence.entity.StateEntity;
 import com.scoperetail.automata.core.persistence.entity.SuccessEvent;
 import com.scoperetail.automata.core.service.EventService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -108,9 +109,8 @@ public class FSM {
    * @param onEvent
    */
   public void onEvent(StateEntity stateful, PendingEvent onEvent) {
-    if (onEvent.getAutomataName() != null
-        && onEvent.getAutomataName() != ""
-        && stateful.getAutomataType() != null
+    if (StringUtils.isNotBlank(onEvent.getAutomataName())
+        && StringUtils.isNotBlank(stateful.getAutomataType())
         && !onEvent.getAutomataName().equals(stateful.getAutomataType())) {
       // discard this event due to order state and event type mismatch
       saveToRejected(onEvent);
@@ -260,7 +260,8 @@ public class FSM {
     }
   }
 
-  private boolean checkPreAction(Method preActionMethod, StateEntity stateful, PendingEvent onEvent) {
+  private boolean checkPreAction(
+      Method preActionMethod, StateEntity stateful, PendingEvent onEvent) {
     if (preActionMethod != null) {
       try {
         return (Boolean) preActionMethod.invoke(this.automata, stateful, onEvent);
@@ -302,7 +303,8 @@ public class FSM {
    * @param ordering
    * @return list of events sorted by the order they should be applied
    */
-  public List<PendingEvent> sortByEventOrdering(List<PendingEvent> events, LinkedHashSet<String> ordering) {
+  public List<PendingEvent> sortByEventOrdering(
+      List<PendingEvent> events, LinkedHashSet<String> ordering) {
     Comparator<PendingEvent> c =
         new Comparator<PendingEvent>() {
           final List<String> list = new ArrayList<>(ordering);
