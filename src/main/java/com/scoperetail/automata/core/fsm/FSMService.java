@@ -1,6 +1,6 @@
 package com.scoperetail.automata.core.fsm;
 
-import com.scoperetail.automata.core.model.StateEntity;
+import com.scoperetail.automata.core.persistence.entity.StateEntity;
 
 /** @author scoperetail */
 public interface FSMService {

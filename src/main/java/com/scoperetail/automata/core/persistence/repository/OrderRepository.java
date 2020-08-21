@@ -1,6 +1,6 @@
-package com.scoperetail.automata.core.repo;
+package com.scoperetail.automata.core.persistence.repository;
 
-import com.scoperetail.automata.core.model.StateEntity;
+import com.scoperetail.automata.core.persistence.entity.StateEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

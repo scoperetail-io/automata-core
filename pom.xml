@@ -83,11 +83,6 @@
             <artifactId>reflections</artifactId>
             <version>0.9.11</version>
         </dependency>
-        <dependency>
-            <groupId>com.scoperetail</groupId>
-            <artifactId>commons-json</artifactId>
-            <version>0.1</version>
-        </dependency>
         <!--Commons dsproxy-->
         <dependency>
             <groupId>com.scoperetail.commons</groupId>

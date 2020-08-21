@@ -1,4 +1,4 @@
-package com.scoperetail.automata.core.utility;
+package com.scoperetail.automata.core.config;
 
 import lombok.Getter;
 import lombok.Setter;

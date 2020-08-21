@@ -5,9 +5,9 @@ import com.scoperetail.automata.core.annotations.Preaction;
 import com.scoperetail.automata.core.annotations.Precondition;
 import com.scoperetail.automata.core.exception.DisconnectedGraphException;
 import com.scoperetail.automata.core.exception.StateAutomataException;
-import com.scoperetail.automata.core.model.Event;
+import com.scoperetail.automata.core.helper.GraphTheoryHelper;
+import com.scoperetail.automata.core.persistence.entity.Event;
 import com.scoperetail.automata.core.service.EventService;
-import com.scoperetail.automata.core.util.GraphTheoryUtil;
 import org.springframework.context.ApplicationContext;
 
 import java.lang.annotation.Annotation;
@@ -130,7 +130,7 @@ public class FSMHarness {
       // Populate Future events for every State, this will help in discarding events which are no
       // longer valid for automata
       // such events could result due to redelivery or late arrivals
-      if (GraphTheoryUtil.checkConnectivity(fsm)) {
+      if (GraphTheoryHelper.checkConnectivity(fsm)) {
         fsmCollection.addFSMByName(fsmName, fsm);
       } else {
         // if yes throw exception due to Disconnected Graph

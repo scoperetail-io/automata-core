@@ -1,9 +1,9 @@
 package com.scoperetail.automata.core.fsm;
 
 import com.scoperetail.automata.core.exception.StateAutomataException;
-import com.scoperetail.automata.core.model.Event;
-import com.scoperetail.automata.core.model.RejectedEvent;
-import com.scoperetail.automata.core.model.StateEntity;
+import com.scoperetail.automata.core.persistence.entity.Event;
+import com.scoperetail.automata.core.persistence.entity.RejectedEvent;
+import com.scoperetail.automata.core.persistence.entity.StateEntity;
 import com.scoperetail.automata.core.service.EventService;
 import com.scoperetail.automata.core.service.StateEntityService;
 import lombok.extern.slf4j.Slf4j;

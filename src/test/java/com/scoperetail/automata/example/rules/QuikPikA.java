@@ -1,7 +1,7 @@
 package com.scoperetail.automata.example.rules;
 
 import com.scoperetail.automata.core.annotations.*;
-import com.scoperetail.automata.core.model.StateEntity;
+import com.scoperetail.automata.core.persistence.entity.StateEntity;
 import com.scoperetail.automata.core.service.StateEntityService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -46,14 +46,14 @@ import org.springframework.stereotype.Component;
 public class QuikPikA {
 
   @Precondition(transition = @Transition(from = "NEW", event = "CREATED", to = "SCHEDULE"))
-  public boolean pNewToSchedule(StateEntity entity, com.scoperetail.automata.core.model.Event e) {
+  public boolean pNewToSchedule(StateEntity entity, com.scoperetail.automata.core.persistence.entity.Event e) {
     log.info("running pNewToSchedule for: {}", entity);
     log.info("******checking if its OK to transition on:****** {}", e);
     return true;
   }
 
   @Preaction(transition = @Transition(from = "NEW", event = "CREATED", to = "SCHEDULE"))
-  public boolean aNewToSchedule(StateEntity entity, com.scoperetail.automata.core.model.Event e) {
+  public boolean aNewToSchedule(StateEntity entity, com.scoperetail.automata.core.persistence.entity.Event e) {
     log.info("running aNewToSchedule for: {}", entity);
     log.info("******checking if its OK to transition on:****** {}", e);
     // Notify schedule using a contrive service
@@ -61,14 +61,14 @@ public class QuikPikA {
   }
 
   @Precondition(transition = @Transition(from = "NEW", event = "CANCEL", to = "CANCEL"))
-  public boolean pNewToCancel(StateEntity entity, com.scoperetail.automata.core.model.Event e) {
+  public boolean pNewToCancel(StateEntity entity, com.scoperetail.automata.core.persistence.entity.Event e) {
     log.info("running pNewToCancel for: {}", entity);
     log.info("******checking if its OK to transition on:****** {}", e);
     return true;
   }
 
   @Preaction(transition = @Transition(from = "NEW", event = "CANCEL", to = "CANCEL"))
-  public boolean aNewToCancel(StateEntity entity, com.scoperetail.automata.core.model.Event e) {
+  public boolean aNewToCancel(StateEntity entity, com.scoperetail.automata.core.persistence.entity.Event e) {
     log.info("running aNewToCancel for: {}", entity);
     log.info("******checking if its OK to transition on:****** {}", e);
     // Notify schedule using a contrive service
@@ -77,7 +77,7 @@ public class QuikPikA {
 
   @Precondition(transition = @Transition(from = "SCHEDULE", event = "CANCEL", to = "CANCEL"))
   public boolean pScheduleToCancel(
-      StateEntity entity, com.scoperetail.automata.core.model.Event e) {
+      StateEntity entity, com.scoperetail.automata.core.persistence.entity.Event e) {
     log.info("running pScheduleToCancel for: {}", entity);
     log.info("******checking if its OK to transition on:****** {}", e);
     return true;
@@ -85,7 +85,7 @@ public class QuikPikA {
 
   @Preaction(transition = @Transition(from = "SCHEDULE", event = "CANCEL", to = "CANCEL"))
   public boolean aScheduleToCancel(
-      StateEntity entity, com.scoperetail.automata.core.model.Event e) {
+      StateEntity entity, com.scoperetail.automata.core.persistence.entity.Event e) {
     log.info("running aScheduleToCancel for: {}", entity);
     log.info("******checking if its OK to transition on:****** {}", e);
     // Notify schedule using a contrive service

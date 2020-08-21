@@ -1,4 +1,4 @@
-package com.scoperetail.automata.core.util;
+package com.scoperetail.automata.core.helper;
 
 import com.scoperetail.automata.core.fsm.FSM;
 import com.scoperetail.automata.core.fsm.State;
@@ -10,11 +10,11 @@ import java.util.*;
 import java.util.Map.Entry;
 
 /** @author scoperetail */
-public class GraphTheoryUtil {
+public class GraphTheoryHelper {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(GraphTheoryUtil.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(GraphTheoryHelper.class);
 
-  private GraphTheoryUtil() {}
+  private GraphTheoryHelper() {}
 
   /*
    * checkConnectivity works on BFS algorithm

@@ -1,4 +1,4 @@
-package com.scoperetail.automata.core.model;
+package com.scoperetail.automata.core.persistence.entity;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

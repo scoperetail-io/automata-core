@@ -1,7 +1,7 @@
 package com.scoperetail.automata.core.service;
 
 import com.scoperetail.automata.core.fsm.FSMService;
-import com.scoperetail.automata.core.model.StateEntity;
+import com.scoperetail.automata.core.persistence.entity.StateEntity;
 
 import java.util.List;
 

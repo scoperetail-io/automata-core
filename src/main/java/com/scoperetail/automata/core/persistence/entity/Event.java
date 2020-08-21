@@ -1,5 +1,6 @@
-package com.scoperetail.automata.core.model;
+package com.scoperetail.automata.core.persistence.entity;
 
+import com.scoperetail.automata.core.spi.AutomataEvent;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -7,8 +8,11 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /** @author scoperetail */
-@Entity(name = "SuccessEvent")
-@Table(name = "success_event")
+@Entity(name = "PendingEvent")
+@Table(name = "pending_event")
+@NamedQuery(
+    name = "Event.findByKeySortByCreateTS",
+    query = "select e from PendingEvent e where e.key like :key order by e.createTS ASC")
 // Event,RejectedEvent and SuccessEvent have similar attributes
 @Getter
 @Setter
@@ -16,7 +20,7 @@ import java.sql.Timestamp;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class SuccessEvent {
+public class Event {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @EqualsAndHashCode.Include
@@ -47,13 +51,13 @@ public class SuccessEvent {
   @Column(name = "retry_count")
   private long retryCount;
 
-  public static SuccessEvent of(final Event event) {
-    return SuccessEvent.builder()
-        .payload(event.getPayload())
-        .eventName(event.getEventName())
-        .key(event.getKey())
-        .lookupKey(event.getLookupKey())
-        .automataName(event.getAutomataName())
+  public static Event of(final AutomataEvent order, final String automataName) {
+    return Event.builder()
+        .payload(order.getPayload())
+        .eventName(order.getEventName())
+        .key(order.getId())
+        .lookupKey(order.primaryLookupKey())
+        .automataName(automataName)
         .build();
   }
 }

@@ -1,6 +1,6 @@
 package com.scoperetail.automata.core.fsm;
 
-import com.scoperetail.automata.core.model.Event;
+import com.scoperetail.automata.core.persistence.entity.Event;
 
 import java.lang.reflect.Method;
 import java.util.*;

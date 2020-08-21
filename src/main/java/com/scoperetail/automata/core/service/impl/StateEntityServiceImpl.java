@@ -1,7 +1,7 @@
 package com.scoperetail.automata.core.service.impl;
 
-import com.scoperetail.automata.core.model.StateEntity;
-import com.scoperetail.automata.core.repo.OrderRepository;
+import com.scoperetail.automata.core.persistence.entity.StateEntity;
+import com.scoperetail.automata.core.persistence.repository.OrderRepository;
 import com.scoperetail.automata.core.service.StateEntityService;
 import org.springframework.stereotype.Service;
 

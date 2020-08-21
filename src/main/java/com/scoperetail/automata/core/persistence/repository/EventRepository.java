@@ -1,6 +1,6 @@
-package com.scoperetail.automata.core.repo;
+package com.scoperetail.automata.core.persistence.repository;
 
-import com.scoperetail.automata.core.model.Event;
+import com.scoperetail.automata.core.persistence.entity.Event;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

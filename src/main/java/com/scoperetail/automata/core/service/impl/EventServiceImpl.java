@@ -1,11 +1,11 @@
 package com.scoperetail.automata.core.service.impl;
 
-import com.scoperetail.automata.core.model.Event;
-import com.scoperetail.automata.core.model.RejectedEvent;
-import com.scoperetail.automata.core.model.SuccessEvent;
-import com.scoperetail.automata.core.repo.EventRepository;
-import com.scoperetail.automata.core.repo.RejectedEventRepository;
-import com.scoperetail.automata.core.repo.SuccessEventRepository;
+import com.scoperetail.automata.core.persistence.entity.Event;
+import com.scoperetail.automata.core.persistence.entity.RejectedEvent;
+import com.scoperetail.automata.core.persistence.entity.SuccessEvent;
+import com.scoperetail.automata.core.persistence.repository.EventRepository;
+import com.scoperetail.automata.core.persistence.repository.RejectedEventRepository;
+import com.scoperetail.automata.core.persistence.repository.SuccessEventRepository;
 import com.scoperetail.automata.core.service.EventService;
 import org.springframework.stereotype.Service;
 

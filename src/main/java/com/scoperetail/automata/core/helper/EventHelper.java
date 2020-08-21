@@ -1,6 +1,7 @@
-package com.scoperetail.automata.core.utility;
+package com.scoperetail.automata.core.helper;
 
-import com.scoperetail.automata.core.model.Event;
+import com.scoperetail.automata.core.config.AutomataNameResolver;
+import com.scoperetail.automata.core.persistence.entity.Event;
 import com.scoperetail.automata.core.spi.AutomataEvent;
 import org.springframework.stereotype.Service;
 

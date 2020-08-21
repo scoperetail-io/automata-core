@@ -1,8 +1,8 @@
 package com.scoperetail.automata.core.service;
 
-import com.scoperetail.automata.core.model.Event;
-import com.scoperetail.automata.core.model.RejectedEvent;
-import com.scoperetail.automata.core.model.SuccessEvent;
+import com.scoperetail.automata.core.persistence.entity.Event;
+import com.scoperetail.automata.core.persistence.entity.RejectedEvent;
+import com.scoperetail.automata.core.persistence.entity.SuccessEvent;
 
 import java.util.List;
 
