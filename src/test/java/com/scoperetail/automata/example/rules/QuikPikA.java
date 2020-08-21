@@ -1,4 +1,4 @@
-package com.scoperetail.automata.core.config;
+package com.scoperetail.automata.example.rules;
 
 import com.scoperetail.automata.core.annotations.*;
 import com.scoperetail.automata.core.model.StateEntity;

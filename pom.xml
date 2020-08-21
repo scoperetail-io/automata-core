@@ -31,6 +31,7 @@
         <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
         <sonar.jacoco.reportPath>${project.basedir}/target/jacoco.exec</sonar.jacoco.reportPath>
         <sonar.language>java</sonar.language>
+        <commons-dsproxy>0.2</commons-dsproxy>
     </properties>
 
     <dependencies>
@@ -77,6 +78,23 @@
             <version>0.7.6</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.9.11</version>
+        </dependency>
+        <dependency>
+            <groupId>com.scoperetail</groupId>
+            <artifactId>commons-json</artifactId>
+            <version>0.1</version>
+        </dependency>
+        <!--Commons dsproxy-->
+        <dependency>
+            <groupId>com.scoperetail.commons</groupId>
+            <artifactId>commons-dsproxy</artifactId>
+            <version>${commons-dsproxy}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -1,0 +1,10 @@
+{
+  "orderType": "REGULAR",
+  "deliveryMethod": "PICKUP",
+  "fulfilBy": "STORE",
+  "tenantId": "TENANT1",
+  "fulfilLocation": "4567",
+  "eventName": "CREATED",
+  "orderId": "TTT-12345-000009",
+  "payload": "TEST PAYLOAD"
+}

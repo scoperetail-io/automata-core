@@ -1,6 +1,6 @@
 package com.scoperetail.automata.core.model;
 
-import com.scoperetail.automata.core.utility.OlcmEvent;
+import com.scoperetail.automata.core.spi.AutomataEvent;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -51,12 +51,12 @@ public class Event {
   @Column(name = "retry_count")
   private long retryCount;
 
-  public static Event of(final OlcmEvent order, final String automataName) {
+  public static Event of(final AutomataEvent order, final String automataName) {
     return Event.builder()
         .payload(order.getPayload())
         .eventName(order.getEventName())
-        .key(order.getKey())
-        .lookupKey(order.getLookupKey())
+        .key(order.getId())
+        .lookupKey(order.primaryLookupKey())
         .automataName(automataName)
         .build();
   }

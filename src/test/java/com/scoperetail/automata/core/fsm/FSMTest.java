@@ -140,7 +140,7 @@ public class FSMTest {
         StateAutomataException.class,
         () -> {
           FSMHarness.harnessFSM(
-              fsmCollection, applicationContext, eventService, StartOrEndMissingOrder.class);
+              fsmCollection, applicationContext, eventService, InvalidStatesOrder.class);
         });
   }
 

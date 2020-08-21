@@ -15,20 +15,11 @@ import java.util.Objects;
 @Setter
 @Getter
 @Slf4j
+/** Check the example under tests */
 public class AutomataNameResolver {
 
+  /** Example:: automata.rule.key.REGULAR_PICKUP_STORE_TENANT1_ALL */
   private Map<String, String> key;
-
-  @Deprecated
-  public String getAutomataName(String supplierType, String customerType, String orderType) {
-    String key = String.format("%s|%s|%s", supplierType, customerType, orderType);
-    /*if (automatas.containsKey(key)) {
-      return automatas.get(key);
-    } else {
-      return "";
-    }*/
-    return "";
-  }
 
   public String getAutomataName(final List<String> lookupKeys) {
     Objects.requireNonNull(lookupKeys);

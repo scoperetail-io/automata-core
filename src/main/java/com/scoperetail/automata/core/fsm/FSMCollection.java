@@ -1,9 +1,15 @@
 package com.scoperetail.automata.core.fsm;
 
-import com.scoperetail.automata.core.config.QuikPikA;
+//import com.scoperetail.automata.core.config.QuikPikA;
+import com.scoperetail.automata.core.annotations.Automata;
 import com.scoperetail.automata.core.exception.DisconnectedGraphException;
 import com.scoperetail.automata.core.exception.StateAutomataException;
 import com.scoperetail.automata.core.service.EventService;
+import lombok.extern.slf4j.Slf4j;
+import org.reflections.Reflections;
+import org.reflections.scanners.MethodAnnotationsScanner;
+import org.reflections.scanners.SubTypesScanner;
+import org.reflections.scanners.TypeAnnotationsScanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -11,9 +17,11 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /** @author scoperetail */
 @Component
+@Slf4j
 public class FSMCollection {
 
   Map<String, FSM> fsmMapByName = new HashMap<>();
@@ -38,6 +46,17 @@ public class FSMCollection {
 
   @PostConstruct
   public void init() throws DisconnectedGraphException, StateAutomataException {
-    FSMHarness.harnessFSM(this, applicationContext, eventService, QuikPikA.class);
+    final Set<Class<?>> classes = getAutomatas();
+    log.info("automatas found: {}",classes);
+    for (Class clazz : classes) {
+      FSMHarness.harnessFSM(this, applicationContext, eventService, clazz);
+    }
+//    FSMHarness.harnessFSM(this, applicationContext, eventService, QuikPikA.class);
+  }
+
+  public Set<Class<?>> getAutomatas() {
+    Reflections reflections = new Reflections("com.scoperetail.automata.example",
+            new TypeAnnotationsScanner(),new SubTypesScanner());
+    return reflections.getTypesAnnotatedWith(Automata.class);
   }
 }
