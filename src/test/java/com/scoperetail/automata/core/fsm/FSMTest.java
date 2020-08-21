@@ -60,6 +60,7 @@ public class FSMTest {
     EventService eventService = Mockito.mock(EventService.class);
     FSMHarness.harnessFSM(fsmCollection, applicationContext, eventService, TestRushOrder.class);
     FSM fsm = fsmCollection.getFSMByName("TestRushOrder");
+    assertNotNull(fsm);
     fsm.setAutomata(testRushOrder);
     fsm.setServiceImpl(orderService);
     // when(orderService.find(10000L)).thenReturn(null);

@@ -12,7 +12,6 @@ import java.sql.Timestamp;
 @Table(name = "state_entity")
 @Getter
 @Setter
-@Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @AllArgsConstructor
 @NoArgsConstructor

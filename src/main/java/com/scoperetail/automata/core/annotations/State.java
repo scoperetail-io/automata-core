@@ -11,5 +11,5 @@ import java.lang.annotation.Target;
 public @interface State {
   String name();
 
-  String comment();
+  String comment() default "";
 }

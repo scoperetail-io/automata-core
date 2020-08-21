@@ -94,9 +94,9 @@ public class FSMHarness {
         if (toState == null) {
           throw new StateAutomataException(
               automataClass.getName()
-                  + " :State used in @Transition :"
+                  + " :State used in @Transition :\""
                   + toName
-                  + "is not defined in @State");
+                  + "\" is not defined in @State");
         }
 
         fromState.addTransition(onEvent.getEventName(), toState);

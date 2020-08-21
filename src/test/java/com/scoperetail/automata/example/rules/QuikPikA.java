@@ -24,18 +24,34 @@ import org.springframework.stereotype.Component;
     startState = "NEW",
     transitions = {
       @Transition(from = "NEW", event = "CREATED", to = "SCHEDULE"),
-      @Transition(from = "NEW", event = "CANCEL", to = "CANCEL"),
-      @Transition(from = "SCHEDULE", event = "CANCEL", to = "CANCEL")
+      @Transition(from = "NEW", event = "CANCELED", to = "CANCEL"),
+      @Transition(from = "SCHEDULE", event = "RELEASED", to = "ROUTE"),
+      @Transition(from = "ROUTE", event = "ROUTED", to = "PICKING"),
+      @Transition(from = "SCHEDULE", event = "CANCELED", to = "CANCEL"),
+      @Transition(from = "PICKING", event = "PICK_COMPLETE", to = "STAGE"),
+      @Transition(from = "STAGE", event = "STAGE_COMPLETE", to = "DISPENSE"),
+      @Transition(from = "DISPENSE", event = "DISPENSE_COMPLETE", to = "END"),
+      @Transition(from = "DISPENSE", event = "REJECTED", to = "END")
     },
     states = {
       @State(name = "NEW", comment = "Starting State"),
-      @State(name = "SCHEDULE", comment = "After getting CREATED message from COP"),
-      @State(name = "CANCEL", comment = "After getting CANCEL message"),
-      @State(name = "END", comment = "After getting RELEASED message from Releaser"),
+      @State(name = "SCHEDULE"),
+      @State(name = "ROUTE"),
+      @State(name = "PICKING"),
+      @State(name = "STAGE"),
+      @State(name = "DISPENSE"),
+      @State(name = "CANCEL"),
+      @State(name = "END")
     },
     events = {
-      @Event(name = "CREATED", comment = "NEW --CREATED---> SCHEDULE"),
-      @Event(name = "CANCEL", comment = "NEW --CANCEL---> CANCEL"),
+      @Event(name = "CREATED"),
+      @Event(name = "CANCELED"),
+      @Event(name = "RELEASED"),
+      @Event(name = "ROUTED"),
+      @Event(name = "PICK_COMPLETE"),
+      @Event(name = "STAGE_COMPLETE"),
+      @Event(name = "DISPENSE_COMPLETE"),
+      @Event(name = "REJECTED", comment = "REJECTED by customer at the time of dispense")
     },
     name = "QUIKPIK_A",
     clazz = QuikPikA.class,
@@ -46,50 +62,66 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class QuikPikA {
 
-  @Precondition(transition = @Transition(from = "NEW", event = "CREATED", to = "SCHEDULE"))
-  public boolean pNewToSchedule(StateEntity entity, PendingEvent e) {
-    log.info("running pNewToSchedule for: {}", entity);
-    log.info("******checking if its OK to transition on:****** {}", e);
-    return true;
-  }
-
   @Preaction(transition = @Transition(from = "NEW", event = "CREATED", to = "SCHEDULE"))
   public boolean aNewToSchedule(StateEntity entity, PendingEvent e) {
-    log.info("running aNewToSchedule for: {}", entity);
-    log.info("******checking if its OK to transition on:****** {}", e);
-    // Notify schedule using a contrive service
+    log.info("entity:{}, pendingEvent:{}", entity, e);
+    // Notify if needed using a service
     return true;
   }
 
-  @Precondition(transition = @Transition(from = "NEW", event = "CANCEL", to = "CANCEL"))
-  public boolean pNewToCancel(StateEntity entity, PendingEvent e) {
-    log.info("running pNewToCancel for: {}", entity);
-    log.info("******checking if its OK to transition on:****** {}", e);
-    return true;
-  }
-
-  @Preaction(transition = @Transition(from = "NEW", event = "CANCEL", to = "CANCEL"))
+  @Preaction(transition = @Transition(from = "NEW", event = "CANCELED", to = "CANCEL"))
   public boolean aNewToCancel(StateEntity entity, PendingEvent e) {
-    log.info("running aNewToCancel for: {}", entity);
-    log.info("******checking if its OK to transition on:****** {}", e);
-    // Notify schedule using a contrive service
+    log.info("entity:{}, pendingEvent:{}", entity, e);
+    // Notify if needed using a service
     return true;
   }
 
-  @Precondition(transition = @Transition(from = "SCHEDULE", event = "CANCEL", to = "CANCEL"))
-  public boolean pScheduleToCancel(
-      StateEntity entity, PendingEvent e) {
-    log.info("running pScheduleToCancel for: {}", entity);
-    log.info("******checking if its OK to transition on:****** {}", e);
+  @Preaction(transition = @Transition(from = "SCHEDULE", event = "RELEASED", to = "ROUTE"))
+  public boolean aScheduleToRoute(StateEntity entity, PendingEvent e) {
+    log.info("entity:{}, pendingEvent:{}", entity, e);
+    // Notify if needed using a service
     return true;
   }
 
-  @Preaction(transition = @Transition(from = "SCHEDULE", event = "CANCEL", to = "CANCEL"))
-  public boolean aScheduleToCancel(
-      StateEntity entity, PendingEvent e) {
-    log.info("running aScheduleToCancel for: {}", entity);
-    log.info("******checking if its OK to transition on:****** {}", e);
-    // Notify schedule using a contrive service
+  @Preaction(transition = @Transition(from = "ROUTE", event = "ROUTED", to = "PICKING"))
+  public boolean aRouteToPicking(StateEntity entity, PendingEvent e) {
+    log.info("entity:{}, pendingEvent:{}", entity, e);
+    // Notify if needed using a service
+    return true;
+  }
+
+  @Preaction(transition = @Transition(from = "SCHEDULE", event = "CANCELED", to = "CANCEL"))
+  public boolean aScheduleToCancel(StateEntity entity, PendingEvent e) {
+    log.info("entity:{}, pendingEvent:{}", entity, e);
+    // Notify if needed using a service
+    return true;
+  }
+
+  @Preaction(transition = @Transition(from = "PICKING", event = "PICK_COMPLETE", to = "STAGE"))
+  public boolean aPickingToStage(StateEntity entity, PendingEvent e) {
+    log.info("entity:{}, pendingEvent:{}", entity, e);
+    // Notify if needed using a service
+    return true;
+  }
+
+  @Preaction(transition = @Transition(from = "STAGE", event = "STAGE_COMPLETE", to = "DISPENSE"))
+  public boolean aStageToDispense(StateEntity entity, PendingEvent e) {
+    log.info("entity:{}, pendingEvent:{}", entity, e);
+    // Notify if needed using a service
+    return true;
+  }
+
+  @Preaction(transition = @Transition(from = "DISPENSE", event = "DISPENSE_COMPLETE", to = "END"))
+  public boolean aDispenseToEndOnComplete(StateEntity entity, PendingEvent e) {
+    log.info("entity:{}, pendingEvent:{}", entity, e);
+    // Notify if needed using a service
+    return true;
+  }
+
+  @Preaction(transition = @Transition(from = "DISPENSE", event = "REJECTED", to = "END"))
+  public boolean aDispenseToEndOnReject(StateEntity entity, PendingEvent e) {
+    log.info("entity:{}, pendingEvent:{}", entity, e);
+    // Notify if needed using a service
     return true;
   }
 }

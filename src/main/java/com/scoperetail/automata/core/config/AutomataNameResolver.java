@@ -26,9 +26,7 @@ public class AutomataNameResolver {
     String automataName = null;
     for (String lookupKey : lookupKeys) {
       automataName = key.get(lookupKey);
-      if (Objects.isNull(automataName)) {
-        continue;
-      } else {
+      if (Objects.nonNull(automataName)) {
         break;
       }
     }

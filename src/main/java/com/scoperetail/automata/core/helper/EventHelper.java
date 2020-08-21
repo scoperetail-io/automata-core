@@ -16,7 +16,6 @@ public class EventHelper {
 
   public PendingEvent getAutomataEventForMessage(final AutomataEvent event) {
     final String automataName = automataNameResolver.getAutomataName(event.lookupKeys());
-    PendingEvent e =  PendingEvent.of(event, automataName);
-    return e;
+    return PendingEvent.of(event, automataName);
   }
 }

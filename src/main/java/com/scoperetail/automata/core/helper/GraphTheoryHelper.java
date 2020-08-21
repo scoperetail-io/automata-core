@@ -171,9 +171,7 @@ public class GraphTheoryHelper {
       // set as false)
       Map<String, Boolean> visited = new HashMap<>();
       this.adjecency.forEach(
-          (k, v) -> {
-            visited.put(k, false);
-          });
+          (k, v) -> visited.put(k, false));
       // List for visited path
       List<String> pathList = new ArrayList<>();
       List<String> pathEdges = new ArrayList<>();

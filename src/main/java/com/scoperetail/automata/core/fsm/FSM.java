@@ -118,7 +118,6 @@ public class FSM {
     }
 
     boolean eventIsProcessed = processEvent(stateful, onEvent);
-    // TODO remove unnecessary abstract class stateful
 
     // stateful entity at this point is:
     // 1. a new event which is just persisted as start state
@@ -304,7 +303,7 @@ public class FSM {
    * @return list of events sorted by the order they should be applied
    */
   public List<PendingEvent> sortByEventOrdering(
-      List<PendingEvent> events, LinkedHashSet<String> ordering) {
+      List<PendingEvent> events, Set<String> ordering) {
     Comparator<PendingEvent> c =
         new Comparator<PendingEvent>() {
           final List<String> list = new ArrayList<>(ordering);

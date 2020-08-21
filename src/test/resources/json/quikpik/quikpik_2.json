@@ -4,7 +4,7 @@
   "fulfilBy": "STORE",
   "tenantId": "TENANT1",
   "fulfilLocation": "4567",
-  "eventName": "CREATED",
-  "orderId": "TTT-12345-000001",
+  "eventName": "PICK_COMPLETE",
+  "orderId": "TTT-12345-000002",
   "payload": "TEST PAYLOAD"
 }
