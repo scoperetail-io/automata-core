@@ -12,7 +12,7 @@ import java.util.List;
 
 /** @author scoperetail */
 @Repository
-public interface EventRepository extends JpaRepository<PendingEvent, Long> {
+public interface PendingEventRepository extends JpaRepository<PendingEvent, Long> {
 
   @Query(name = "FIND_BY_KEY_AND_SORT_BY_CREAT_TS")
   List<PendingEvent> findByKeySortByCreateTS(@Param("key") final String key);

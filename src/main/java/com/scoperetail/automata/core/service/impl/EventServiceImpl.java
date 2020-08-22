@@ -3,7 +3,7 @@ package com.scoperetail.automata.core.service.impl;
 import com.scoperetail.automata.core.persistence.entity.PendingEvent;
 import com.scoperetail.automata.core.persistence.entity.RejectedEvent;
 import com.scoperetail.automata.core.persistence.entity.SuccessEvent;
-import com.scoperetail.automata.core.persistence.repository.EventRepository;
+import com.scoperetail.automata.core.persistence.repository.PendingEventRepository;
 import com.scoperetail.automata.core.persistence.repository.RejectedEventRepository;
 import com.scoperetail.automata.core.persistence.repository.SuccessEventRepository;
 import com.scoperetail.automata.core.service.EventService;
@@ -19,7 +19,7 @@ import java.util.Optional;
 @Transactional
 public class EventServiceImpl implements EventService {
 
-  @Resource private EventRepository eventRepository;
+  @Resource private PendingEventRepository pendingEventRepository;
 
   @Resource private RejectedEventRepository rejectedEventRepository;
 
@@ -27,7 +27,7 @@ public class EventServiceImpl implements EventService {
 
   @Override
   public PendingEvent find(Long id) {
-    Optional<PendingEvent> event = eventRepository.findById(id);
+    Optional<PendingEvent> event = pendingEventRepository.findById(id);
     if (event.isPresent()) {
       return event.get();
     } else {
@@ -37,8 +37,8 @@ public class EventServiceImpl implements EventService {
 
   @Override
   public void save(PendingEvent event) {
-    eventRepository.save(event);
-    eventRepository.flush();
+    pendingEventRepository.save(event);
+    pendingEventRepository.flush();
   }
 
   @Override
@@ -46,18 +46,18 @@ public class EventServiceImpl implements EventService {
     PendingEvent eventManaged = find(event.getId());
     if (eventManaged != null) {
       eventManaged.setRetryCount(eventManaged.getRetryCount() + 1);
-      eventRepository.flush();
+      pendingEventRepository.flush();
     }
   }
 
   @Override
   public List<PendingEvent> findAll() {
-    return eventRepository.findAll();
+    return pendingEventRepository.findAll();
   }
 
   @Override
   public List<PendingEvent> findByKeySortByCreateTS(final String key) {
-    return eventRepository.findByKeySortByCreateTS(key);
+    return pendingEventRepository.findByKeySortByCreateTS(key);
   }
 
   @Override

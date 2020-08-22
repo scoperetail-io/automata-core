@@ -1,7 +1,7 @@
 package com.scoperetail.automata.core.service.impl;
 
 import com.scoperetail.automata.core.persistence.entity.StateEntity;
-import com.scoperetail.automata.core.persistence.repository.OrderRepository;
+import com.scoperetail.automata.core.persistence.repository.StateEntityRepository;
 import com.scoperetail.automata.core.service.StateEntityService;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,8 @@ import java.util.Optional;
 @Transactional
 public class StateEntityServiceImpl implements StateEntityService {
 
-  @Resource OrderRepository orderRepo;
+  @Resource
+  StateEntityRepository orderRepo;
 
   @PersistenceContext EntityManager entityManager;
 
