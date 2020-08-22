@@ -9,7 +9,7 @@
     </parent>
     <groupId>com.scoperetail.automata.core</groupId>
     <artifactId>automata-core</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <name>automata-core</name>
     <scm>
         <developerConnection>
