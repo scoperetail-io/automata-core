@@ -15,10 +15,10 @@ import java.util.List;
 public interface PendingEventRepository extends JpaRepository<PendingEvent, Long> {
 
   @Query(name = "FIND_BY_KEY_AND_SORT_BY_CREAT_TS")
-  List<PendingEvent> findByKeySortByCreateTS(@Param("key") final String key);
+  List<PendingEvent> findByKeySortByCreateTS(@Param("entityId") final String entityId);
 
   @Query(name = "DELETE_PENDING_EVENTS")
   @Modifying
   @Transactional
-  Integer deletePendingEvents(@Param("keyList") List<String> keyList);
+  Integer deletePendingEvents(@Param("entityIdList") List<String> entityIdList);
 }

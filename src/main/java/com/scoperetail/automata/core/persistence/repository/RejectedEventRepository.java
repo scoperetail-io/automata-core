@@ -17,5 +17,5 @@ public interface RejectedEventRepository extends JpaRepository<RejectedEvent, Lo
   @Query(name = "DELETE_REJECTED_EVENTS")
   @Modifying
   @Transactional
-  Integer deleteRejectedEvents(@Param("keyList") List<String> keyList);
+  Integer deleteRejectedEvents(@Param("entityIdList") List<String> entityIdList);
 }

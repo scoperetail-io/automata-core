@@ -279,7 +279,7 @@ public class FSM {
 
   private void applyParkedEvents(StateEntity stateEntity) {
 
-    List<PendingEvent> pendingEvents = findEligibleParkedEvents(stateEntity.getKey());
+    List<PendingEvent> pendingEvents = findEligibleParkedEvents(stateEntity.getEntityId());
     if (pendingEvents.size() > 1) {
       // We know that Future Events are stored in a LinkedHashSet, its safe to typecast
       pendingEvents =

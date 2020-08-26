@@ -60,6 +60,6 @@ public class StateEntityServiceImpl implements StateEntityService {
 
   @Override
   public StateEntity findByStateEntityNum(final String key) {
-    return orderRepo.findByKey(key);
+    return orderRepo.findByEntityId(key);
   }
 }

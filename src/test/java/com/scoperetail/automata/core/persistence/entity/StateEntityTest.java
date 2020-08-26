@@ -17,7 +17,7 @@ class StateEntityTest {
                 .testing(Method.GETTER, Method.SETTER)
                 .testing(Method.CONSTRUCTOR)
                 .areWellImplemented();
-        assertPojoMethodsFor(classUnderTest, include("key"))
+        assertPojoMethodsFor(classUnderTest, include("entityId"))
                 .testing(Method.EQUALS, Method.HASH_CODE)
                 .areWellImplemented();
     }
