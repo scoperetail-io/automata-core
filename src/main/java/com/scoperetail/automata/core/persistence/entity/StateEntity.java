@@ -35,9 +35,9 @@ public class StateEntity {
   @UpdateTimestamp
   private Timestamp updateTS;
 
-  @Column(unique = true, length = 20, name = "key")
+  @Column(unique = true, length = 20, name = "entity_id")
   @EqualsAndHashCode.Include
-  private String key;
+  private String entityId;
 
   @Column(name = "automata_type", length = 30)
   private String automataType;
