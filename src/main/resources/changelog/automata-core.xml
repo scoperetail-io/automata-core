@@ -9,14 +9,14 @@
                 <constraints primaryKey="true"/>
             </column>
             <column name="state_name" type="VARCHAR(30)"/>
-            <column name="create_ts" type="datetime"/>
-            <column name="delete_ts" type="datetime"/>
-            <column name="update_ts" type="datetime"/>
-            <column name="key" type="VARCHAR(20)"/>
+            <column name="create_ts" type="timestamp"/>
+            <column name="delete_ts" type="timestamp"/>
+            <column name="update_ts" type="timestamp"/>
+            <column name="entity_id" type="VARCHAR(20)"/>
             <column name="automata_type" type="VARCHAR(30)"/>
             <column name="lookup_key" type="VARCHAR(255)"/>
         </createTable>
-        <addUniqueConstraint columnNames="key" constraintName="state_entity_uk" tableName="state_entity"/>
+        <addUniqueConstraint columnNames="entity_id" constraintName="state_entity_uk" tableName="state_entity"/>
         <addNotNullConstraint tableName="state_entity" columnName="create_ts" columnDataType="timestamp"
                               defaultNullValue="CURRENT_TIMESTAMP"/>
         <createIndex indexName="order_entity_idx" tableName="state_entity">
@@ -31,14 +31,14 @@
             <column name="create_ts" type="datetime"/>
             <column name="delete_ts" type="datetime"/>
             <column name="event_name" type="VARCHAR(30)"/>
-            <column name="key" type="VARCHAR(20)"/>
+            <column name="entity_id" type="VARCHAR(20)"/>
             <column name="payload" type="VARCHAR(255)"/>
             <column name="automata_name" type="VARCHAR(30)"/>
             <column name="lookup_key" type="VARCHAR(255)"/>
             <column name="retry_count" type="BIGINT"/>
         </createTable>
         <createIndex indexName="pending_event_idx" tableName="pending_event">
-            <column name="key"/>
+            <column name="entity_id"/>
         </createIndex>
     </changeSet>
     <changeSet author="tushar" id="1535500379742-6">
@@ -49,14 +49,14 @@
             <column name="create_ts" type="datetime"/>
             <column name="delete_ts" type="datetime"/>
             <column name="event_name" type="VARCHAR(30)"/>
-            <column name="key" type="VARCHAR(20)"/>
+            <column name="entity_id" type="VARCHAR(20)"/>
             <column name="payload" type="VARCHAR(255)"/>
             <column name="automata_name" type="VARCHAR(30)"/>
             <column name="lookup_key" type="VARCHAR(255)"/>
             <column name="retry_count" type="BIGINT"/>
         </createTable>
         <createIndex indexName="rejected_event_idx" tableName="rejected_event">
-            <column name="key"/>
+            <column name="entity_id"/>
         </createIndex>
     </changeSet>
     <changeSet author="tushar" id="1535500379742-7">
@@ -67,14 +67,14 @@
             <column name="create_ts" type="datetime"/>
             <column name="delete_ts" type="datetime"/>
             <column name="event_name" type="VARCHAR(30)"/>
-            <column name="key" type="VARCHAR(20)"/>
+            <column name="entity_id" type="VARCHAR(20)"/>
             <column name="payload" type="VARCHAR(255)"/>
             <column name="automata_name" type="VARCHAR(30)"/>
             <column name="lookup_key" type="VARCHAR(255)"/>
             <column name="retry_count" type="BIGINT"/>
         </createTable>
         <createIndex indexName="success_event_idx" tableName="success_event">
-            <column name="key"/>
+            <column name="entity_id"/>
         </createIndex>
     </changeSet>
 </databaseChangeLog>

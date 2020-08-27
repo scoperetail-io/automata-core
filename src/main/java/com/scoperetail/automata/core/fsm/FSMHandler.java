@@ -41,7 +41,7 @@ public class FSMHandler implements FiniteStateMachine {
       }
     }
 
-    StateEntity s = orderService.findByStateEntityNum(onEvent.getKey());
+    StateEntity s = orderService.findByStateEntityNum(onEvent.getEntityId());
     if (s != null && fsm == null) {
       fsm = fsmCollection.getFSMByName(s.getAutomataType());
     }
@@ -56,7 +56,7 @@ public class FSMHandler implements FiniteStateMachine {
       // this is a new entity, since we dont know the order type it needs to come from event
       s = new StateEntity();
       s.setLookupKey(onEvent.getLookupKey());
-      s.setKey(onEvent.getKey());
+      s.setEntityId(onEvent.getEntityId());
       s.setAutomataType(onEvent.getAutomataName());
     }
     fsm.onEvent(s, onEvent);

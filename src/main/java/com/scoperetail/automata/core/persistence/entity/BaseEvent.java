@@ -30,8 +30,8 @@ public class BaseEvent {
   @Column(length = 30, name = "event_name")
   private String eventName;
 
-  @Column(length = 20, name = "key")
-  private String key;
+  @Column(length = 20, name = "entity_id")
+  private String entityId;
 
   @Column(length = 255, name = "payload")
   private String payload;
@@ -46,7 +46,7 @@ public class BaseEvent {
   private long retryCount;
 
   public BaseEvent(final AutomataEvent automataEvent, final String automataName) {
-    this.key = automataEvent.getId();
+    this.entityId = automataEvent.getId();
     this.lookupKey = automataEvent.primaryLookupKey();
     this.automataName = automataName;
     this.payload = automataEvent.getPayload();
@@ -54,7 +54,7 @@ public class BaseEvent {
   }
 
   public BaseEvent(final PendingEvent event) {
-    this.key = event.getKey();
+    this.entityId = event.getEntityId();
     this.lookupKey = event.getLookupKey();
     this.automataName = event.getAutomataName();
     this.payload = event.getPayload();

@@ -85,14 +85,14 @@ public class FSMTest {
     PendingEvent event = new PendingEvent();
     event.setEventName("E1");
     event.setAutomataName("TestRushOrder");
-    event.setKey("10000");
+    event.setEntityId("10000");
     return event;
   }
 
   private StateEntity getEntity() {
     StateEntity s = new StateEntity();
     s.setId(10000L);
-    s.setKey("10000");
+    s.setEntityId("10000");
     s.setAutomataType("TestRushOrder");
     return s;
   }

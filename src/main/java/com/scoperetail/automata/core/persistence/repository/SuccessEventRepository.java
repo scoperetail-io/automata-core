@@ -17,5 +17,5 @@ public interface SuccessEventRepository extends JpaRepository<SuccessEvent, Long
   @Query(name = "DELETE_SUCCESS_EVENTS")
   @Modifying
   @Transactional
-  Integer deleteSuccessEvents(@Param("keyList") List<String> keyList);
+  Integer deleteSuccessEvents(@Param("entityIdList") List<String> entityIdList);
 }
