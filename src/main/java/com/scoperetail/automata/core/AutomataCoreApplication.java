@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.scoperetail"})
-@EntityScan(basePackages = {"com.scoperetail"})
-@EnableJpaRepositories(basePackages = {"com.scoperetail"})
+@EntityScan(basePackages = {"com.scoperetail.automata.core.persistence.entity"})
+@EnableJpaRepositories(basePackages = {"com.scoperetail.automata.core.persistence.repository"})
 public class AutomataCoreApplication {
 
   public static void main(String[] args) {
