@@ -1,4 +1,4 @@
-package com.scoperetail.automata.core.annotations;
+package com.scoperetail.automata.core.persistence.mapper;
 
 /*-
  * *****
@@ -26,29 +26,18 @@ package com.scoperetail.automata.core.annotations;
  * =====
  */
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import com.scoperetail.automata.core.persistence.entity.PendingEvent;
+import com.scoperetail.automata.core.persistence.entity.RejectedEvent;
+import com.scoperetail.automata.core.persistence.entity.StateEntity;
+import com.scoperetail.automata.core.persistence.entity.SuccessEvent;
 
-/** @author scoperetail */
-@Target({ElementType.TYPE})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Automata {
+public interface StateEventHistoryMapper {
 
-  String name();
+  StateEntity getStateEntity();
 
-  Class<?> clazz();
+  RejectedEvent getRejectedEvent();
 
-  Class<?> service();
+  SuccessEvent getSuccessEvent();
 
-  String startState();
-
-  String[] endState();
-
-  Transition[] transitions();
-
-  State[] states();
-
-  Event[] events();
+  PendingEvent getPendingEvent();
 }
