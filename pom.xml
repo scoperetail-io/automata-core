@@ -28,6 +28,16 @@
         <commons-json.version>1.0</commons-json.version>
         <reflections.version>0.9.11</reflections.version>
     </properties>
+    <developers>
+        <developer>
+            <id>Suyog Barve</id>
+            <email>suyogbarve@gmail.com</email>
+        </developer>
+        <developer>
+            <id>Tushar Agrawal</id>
+            <email>tushar.agrawal@scoperetail.com</email>
+        </developer>
+    </developers>
     <dependencyManagement>
         <dependencies>
             <dependency>
