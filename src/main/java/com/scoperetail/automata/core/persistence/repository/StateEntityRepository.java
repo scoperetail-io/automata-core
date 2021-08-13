@@ -46,7 +46,7 @@ public interface StateEntityRepository extends JpaRepository<StateEntity, Long> 
   StateEntity findByEntityId(final String entityId);
 
   @Query(name = "STATE.EVENT.HISTORY")
-  List<StateEventHistoryMapper> getStateEventHistory(@Param("entityId") Long entityId);
+  List<StateEventHistoryMapper> getStateEventHistory(@Param("entityId") String entityId);
 
   @Query(name = "GET_STATE_ENTITY_TO_ERASE")
   List<Integer> getEntityIdToErase(
