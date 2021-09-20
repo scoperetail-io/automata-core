@@ -49,7 +49,7 @@ public interface StateEntityRepository extends JpaRepository<StateEntity, Long> 
   List<StateEventHistoryMapper> getStateEventHistory(@Param("entityId") String entityId);
 
   @Query(name = "GET_STATE_ENTITY_TO_ERASE")
-  List<Integer> getEntityIdToErase(
+  List<String> getEntityIdToErase(
       @Param("pivoteDateTime") Timestamp pivoteDateTime,
       @Param("validStateNameForDelete") List<String> validStateNameForDelete,
       Pageable pageable);
@@ -57,5 +57,5 @@ public interface StateEntityRepository extends JpaRepository<StateEntity, Long> 
   @Query(name = "DELETE_STATE_ENTITY")
   @Modifying
   @Transactional
-  Integer deleteStateEntity(@Param("entityIdList") List<Integer> entityIdList);
+  Integer deleteStateEntity(@Param("entityIdList") List<String> entityIdList);
 }
