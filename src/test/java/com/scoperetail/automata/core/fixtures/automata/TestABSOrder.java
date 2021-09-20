@@ -70,8 +70,8 @@ public class TestABSOrder {
   @Precondition(transition = @Transition(from = "START", event = "E1", to = "SECOND"))
   public boolean P01(StateEntity entity, PendingEvent e) {
     System.out.println("running P01 for: " + entity);
-    System.out.println("******checking if its OK to transition on:******" + e);
-    System.out.println("******checking if its OK to transition******");
+    System.out.println("**checking if its OK to transition on:**" + e);
+    System.out.println("**checking if its OK to transition**");
     randomWorkService.checkSomething("something");
     return true;
   }
@@ -79,14 +79,14 @@ public class TestABSOrder {
   @Precondition(transition = @Transition(from = "SECOND", event = "E2", to = "THIRD"))
   public boolean P12(StateEntity entity, PendingEvent e) {
     System.out.println("running P12 for: " + entity);
-    System.out.println("******checking if its OK to transition on:******" + e);
+    System.out.println("**checking if its OK to transition on:**" + e);
     return true;
   }
 
   @Preaction(transition = @Transition(from = "START", event = "E1", to = "SECOND"))
   public boolean A01(StateEntity entity, PendingEvent e) {
     System.out.println("running A01 for: " + entity);
-    System.out.println("******checking if its OK to transition on:******" + e);
+    System.out.println("**checking if its OK to transition on:**" + e);
     randomWorkService.doSomeWork();
     return true;
   }
@@ -94,7 +94,7 @@ public class TestABSOrder {
   @Preaction(transition = @Transition(from = "SECOND", event = "E2", to = "THIRD"))
   public boolean A12(StateEntity entity, PendingEvent e) {
     System.out.println("running A12 for: " + entity);
-    System.out.println("******checking if its OK to transition on:******" + e);
+    System.out.println("**checking if its OK to transition on:**" + e);
     return true;
   }
 }
