@@ -9,7 +9,7 @@
     </parent>
     <groupId>com.scoperetail.automata</groupId>
     <artifactId>automata-core</artifactId>
-    <version>1.6</version>
+    <version>1.7-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>Utility library for JSON</description>
     <url>https://github.com/scoperetail-io/${project.artifactId}</url>
@@ -17,7 +17,7 @@
         <developerConnection>
             scm:git:git@github.com:scoperetail-io/${project.artifactId}.git
         </developerConnection>
-        <tag>automata-core-1.6</tag>
+        <tag>HEAD</tag>
         <url>https://github.com/scoperetail-io/${project.artifactId}</url>
     </scm>
     <properties>
