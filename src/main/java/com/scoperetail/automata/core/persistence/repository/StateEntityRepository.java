@@ -65,7 +65,6 @@ public interface StateEntityRepository extends JpaRepository<StateEntity, Long> 
   @Modifying
   @Transactional
   Integer updateStateEntity(
-      @Param("pivoteDateTime") Timestamp pivoteDateTime,
       @Param("validStateNameForDelete") String validStateNameForDelete,
       @Param("entityIdList") List<String> entityIdList);
 }
