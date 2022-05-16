@@ -61,10 +61,10 @@ public interface StateEntityRepository extends JpaRepository<StateEntity, Long> 
   @Transactional
   Integer deleteStateEntity(@Param("entityIdList") List<String> entityIdList);
 
-  @Query(name = "UPDATE_STATE_ENTITY_FOR_ERASER")
+  @Query(name = "UPDATE_STATE_NAME_BY_ENTITY_IDS")
   @Modifying
   @Transactional
-  Integer updateStateEntity(
-      @Param("validStateNameForDelete") String validStateNameForDelete,
+  Integer updateStateName(
+      @Param("newStateName") String newStateName,
       @Param("entityIdList") List<String> entityIdList);
 }
