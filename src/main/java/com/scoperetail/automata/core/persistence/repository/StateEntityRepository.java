@@ -12,10 +12,10 @@ package com.scoperetail.automata.core.persistence.repository;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -39,7 +39,9 @@ import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.List;
 
-/** @author scoperetail */
+/**
+ * @author scoperetail
+ */
 @Repository
 public interface StateEntityRepository extends JpaRepository<StateEntity, Long> {
 
@@ -58,4 +60,11 @@ public interface StateEntityRepository extends JpaRepository<StateEntity, Long> 
   @Modifying
   @Transactional
   Integer deleteStateEntity(@Param("entityIdList") List<String> entityIdList);
+
+  @Query(name = "UPDATE_STATE_NAME_BY_ENTITY_IDS")
+  @Modifying
+  @Transactional
+  Integer updateStateName(
+      @Param("newStateName") String newStateName,
+      @Param("entityIdList") List<String> entityIdList);
 }
